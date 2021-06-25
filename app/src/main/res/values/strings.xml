@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Plan Do Done</string>
+    <string name="label_gen_save">Save</string>
+    <string name="label_gen_cancel">Cancel</string>
+    <string name="label_gen_delete">Delete</string>
+    <string name="project_add">Add Project</string>
+    <string name="project_add_help">Please first add a project and than todo items.</string>
+    <string name="project_edit_name">Project name</string>
+    <string name="project_edit_active">Project active?</string>
+    <string name="todo_edit_project">Edit project</string>
+    <string name="todo_add_todo">Add todo</string>
+    <string name="todo_title">Title</string>
+    <string name="todo_title_desc">Title of the todo</string>
+    <string name="todo_description">Description</string>
+    <string name="todo_description_desc">Longer description of the todo</string>
+    <string name="todo_project_name">Project name</string>
+    <string name="todo_status">Status</string>
+    <string-array name="todo_status_modes">
+        <item>New</item>
+        <item>Started</item>
+        <item>Finished</item>
+        <item>Waiting</item>
+        <item>Stopped</item>
+    </string-array>
+</resources>
