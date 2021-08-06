@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
 import androidx.annotation.MenuRes
 import org.elaya.pdd.R
 import org.elaya.pdd.databinding.ActivityProjectBinding
@@ -116,12 +117,31 @@ class ProjectFragment:FragmentBase(),ProjectEditSaveHandler {
             val lDb=Globals.db
             if(lDb != null) {
                 val lTodoList = lDb.getTodos(lProject.id)
-                lBinding.todoList.removeAllViews(     )
+                lBinding.todoList.removeAllViews( )
+                val lStatusDesc=resources.getStringArray(R.array.todo_status_modes);
                 lTodoList.forEach{
                     val lRow=TodoIncItemBinding.inflate(lLayoutInflater,lBinding.todoList,true)
                     lRow.root.setOnClickListener(this::editTodo)
                     lRow.title.text=it.title
                     lRow.root.tag=it;
+                    val lStatus=it.status;
+                    if(lStatus==Todo.STATUS_FINISHED || lStatus==Todo.STATUS_STOPPED) {
+                        lRow.title.setBackgroundResource(R.drawable.strike)
+                    }
+                    if(lStatus>=0 && lStatus<lStatusDesc.size) {
+                        lRow.status.contentDescription = lStatusDesc[lStatus];
+                        @DrawableRes var lImage: Int = -1;
+                        if (lStatus == Todo.STATUS_STARTED) {
+                            lImage = R.drawable.todo_start
+                        } else if (lStatus == Todo.STATUS_NEW) {
+                            lImage = R.drawable.todo_new
+                        } else if (lStatus == Todo.STATUS_STOPPED) {
+                            lImage = R.drawable.todo_stopped
+                        }
+                        if (lImage != -1) {
+                            lRow.status.setImageResource(lImage)
+                        }
+                    }
                 }
 
 

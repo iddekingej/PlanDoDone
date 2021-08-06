@@ -58,6 +58,12 @@ class Todo :Parcelable {
         const val F_PROJECT_ID="id_project"
         const val F_DESCRIPTION="description"
         const val F_STATUS="status"
+
+        const val STATUS_NEW=0;
+        const val STATUS_STARTED=1;
+        const val STATUS_FINISHED=2;
+        const val STATUS_WAITING=3;
+        const val STATUS_STOPPED=4;
     }
 
 
