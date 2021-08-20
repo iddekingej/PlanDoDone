@@ -66,7 +66,7 @@ class ProjectEditFragment: DialogFragmentBase() {
         lBinding.save.setOnClickListener(this::dialogSave)
 
         val lArguments=arguments
-        if(lArguments==null){
+        if(lArguments==null|| !lArguments.containsKey(P_NAME)){
             lBinding.isActive.isChecked=true
             projectId=-1
         } else {
