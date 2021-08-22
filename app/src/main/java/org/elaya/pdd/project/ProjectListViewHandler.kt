@@ -1,25 +1,25 @@
 package org.elaya.pdd.project
 
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.TextView
-import org.elaya.pdd.R
+
+import org.elaya.pdd.databinding.AdapterProjectBinding
 import org.elaya.pdd.tools.views.ListViewHandler
 
-abstract class ProjectListViewHandler(pParent:LinearLayout) : ListViewHandler<LinearLayout, Project>(pParent) {
+abstract class ProjectListViewHandler(pParent:LinearLayout) : ListViewHandler<LinearLayout, Project,AdapterProjectBinding>(pParent) {
 
     override fun checkData(pObject: Any): Boolean {
         return pObject is Project
     }
 
-    override fun getItemRes(): Int {
-        return R.layout.adapter_project
+
+    override fun makeView(pInflater: LayoutInflater, pParent: ViewGroup): AdapterProjectBinding {
+        return AdapterProjectBinding.inflate(pInflater,pParent,true)
     }
 
-
-     override fun fillData(pView: View, pData: Project) {
-         val lName:TextView=pView.findViewById(R.id.name)
-         lName.text = pData.name
+     override fun fillData(pView: AdapterProjectBinding, pData: Project) {
+         pView.name.text=pData.name
      }
 
 

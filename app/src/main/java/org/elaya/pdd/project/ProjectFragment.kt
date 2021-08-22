@@ -4,18 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
-import androidx.annotation.MenuRes
-import org.elaya.pdd.R
 import org.elaya.pdd.databinding.ActivityProjectBinding
-import org.elaya.pdd.databinding.TodoIncItemBinding
 import org.elaya.pdd.settings.Globals
 import org.elaya.pdd.todo.ToDoEditFragment
 import org.elaya.pdd.todo.Todo
+import org.elaya.pdd.todo.TodoList
 import org.elaya.pdd.tools.fragments.FragmentBase
 
 class ProjectFragment:FragmentBase(),ProjectEditSaveHandler {
     private var project:Project?=null
+    private var todoList:TodoList?=null;
 
     companion object{
         const val P_ProjectID="projectId"
@@ -80,6 +78,13 @@ class ProjectFragment:FragmentBase(),ProjectEditSaveHandler {
             }
         }
         lBinding.addTodo.setOnClickListener(this::addTodo)
+        todoList=object:TodoList(lBinding.todoList){
+            override fun onClickEvent(pData:Todo){
+                startFragment("editTodo"){
+                    ToDoEditFragment.newInstance(pData)
+                }
+            }
+        }
         return lBinding.root
     }
 
@@ -99,52 +104,19 @@ class ProjectFragment:FragmentBase(),ProjectEditSaveHandler {
         }
     }
 
-    private fun editTodo(pView:View)
-    {
-        val lTag=pView.tag
-        if(lTag is Todo){
-            startFragment("editTodo"){
-                ToDoEditFragment.newInstance(lTag)
-            }
-        }
-    }
     private fun makeTodoList()
     {
         val lProject=project
         val lBinding=binding
+        val lTodolist=todoList
+
         val lLayoutInflater=layoutInflater
-        if(lProject != null && lBinding != null) {
+        if(lProject != null && lBinding != null && lTodolist != null) {
             val lDb=Globals.db
             if(lDb != null) {
-                val lTodoList = lDb.getTodos(lProject.id)
-                lBinding.todoList.removeAllViews( )
-                val lStatusDesc=resources.getStringArray(R.array.todo_status_modes);
-                lTodoList.forEach{
-                    val lRow=TodoIncItemBinding.inflate(lLayoutInflater,lBinding.todoList,true)
-                    lRow.root.setOnClickListener(this::editTodo)
-                    lRow.title.text=it.title
-                    lRow.root.tag=it;
-                    val lStatus=it.status;
-                    if(lStatus==Todo.STATUS_FINISHED || lStatus==Todo.STATUS_STOPPED) {
-                        lRow.title.setBackgroundResource(R.drawable.strike)
-                    }
-                    if(lStatus>=0 && lStatus<lStatusDesc.size) {
-                        lRow.status.contentDescription = lStatusDesc[lStatus];
-                        @DrawableRes var lImage: Int = -1;
-                        if (lStatus == Todo.STATUS_STARTED) {
-                            lImage = R.drawable.todo_start
-                        } else if (lStatus == Todo.STATUS_NEW) {
-                            lImage = R.drawable.todo_new
-                        } else if (lStatus == Todo.STATUS_STOPPED) {
-                            lImage = R.drawable.todo_stopped
-                        }
-                        if (lImage != -1) {
-                            lRow.status.setImageResource(lImage)
-                        }
-                    }
-                }
+                val lTodos= lDb.getTodos(lProject.id)
 
-
+                lTodolist.makeList(lLayoutInflater,lTodos)
             }
         }
     }
