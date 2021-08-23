@@ -92,6 +92,7 @@ class DataSource(pContext:Context) {
 
     }
 
+
     fun addTodo(pProjectId:Int,pStatus:Int,pTitle:String, pDescription:String){
         val lValues=ContentValues()
         lValues.put(Todo.F_TITLE,pTitle)
@@ -116,6 +117,14 @@ class DataSource(pContext:Context) {
             Todo(it.getInt(0),pProjectId,it.getInt(3),it.getString(1),it.getString(2))
         }
     }
+
+    fun getActiveTodos():LinkedList<Todo>
+    {
+        return fetchRows("select id,title,description,status,id_project from "+Todo.TABLE_NAME+" where status ="+Todo.STATUS_STARTED){
+            Todo(it.getInt(0),it.getInt(4),it.getInt(3),it.getString(1),it.getString(2))
+        }
+    }
+
 
     fun deleteTodo(pTodoId: Int)
     {

@@ -6,14 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
 
+    <TableLayout
+        android:id="@+id/todoList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/projectAdd"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.40"
+        />
 
-    <!-- TODO: Update blank fragment layout -->
     <Button
         android:id="@+id/projectAdd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/project_add"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/todoList"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/projectList"

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import org.elaya.pdd.databinding.FragmentProcesListBinding
 import org.elaya.pdd.settings.Globals
+import org.elaya.pdd.todo.Todo
+import org.elaya.pdd.todo.TodoList
 import org.elaya.pdd.tools.fragments.FragmentBase
 
 
@@ -17,6 +19,7 @@ import org.elaya.pdd.tools.fragments.FragmentBase
 class ProjectListFragment : FragmentBase() {
     private var binding:FragmentProcesListBinding?=null
     private var projectHandler:ProjectListViewHandler?=null
+    private var todoListHandler: TodoList?=null;
 
     override fun onCreateView(
         pInflater: LayoutInflater, pContainer: ViewGroup?,
@@ -31,6 +34,11 @@ class ProjectListFragment : FragmentBase() {
             }
         }
         lBinding.projectAdd.setOnClickListener(this::newProject)
+        todoListHandler=object:TodoList(lBinding.todoList){
+            override fun onClickEvent(pData: Todo) {
+            }
+
+        }
         return lBinding.root
     }
 
@@ -72,7 +80,15 @@ class ProjectListFragment : FragmentBase() {
                 lBinding.projectAddHelp.visibility = View.GONE
                 lBinding.projectList.visibility = View.VISIBLE
             }
-
+            val lTodoList = todoListHandler;
+            if(lTodoList != null) {
+                val lTodos = lDb.getActiveTodos()
+                val lIsEmpty=lTodos.isEmpty();
+                lBinding.todoList.visibility=if(lIsEmpty){View.GONE} else {View.VISIBLE}
+                if(!lTodos.isEmpty()) {
+                    lTodoList.makeList(layoutInflater, lTodos)
+                }
+            }
         }
 
     }
