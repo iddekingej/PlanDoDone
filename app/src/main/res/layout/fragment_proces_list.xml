@@ -6,24 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
 
-    <TableLayout
-        android:id="@+id/todoList"
+    <ScrollView
+        android:id="@+id/todoListScroll"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/projectAdd"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.40"
-        />
+        app:layout_constrainedHeight="true"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
 
+        >
+        <TableLayout
+            android:id="@+id/todoList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
     <Button
         android:id="@+id/projectAdd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/project_add"
-        app:layout_constraintTop_toBottomOf="@id/todoList"
+        app:layout_constraintTop_toBottomOf="@id/todoListScroll"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/projectList"
