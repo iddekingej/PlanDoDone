@@ -17,92 +17,92 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/projectLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/titleLabel"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:labelFor="@+id/project"
-        android:text="@string/todo_project_name"
-        />
-    <Spinner
-        android:id="@+id/project"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/projectLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/statusLabel"
-        android:contentDescription="@string/todo_project_name"
-        android:gravity="start"
-        android:paddingStart="0dp"
-        android:layout_marginStart="0dp"
 
-        />
 
+            <TextView
+                android:id="@+id/titleLabel"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:text="@string/todo_title"
+                android:labelFor="@+id/titleInput"
+                style="@style/formLabel"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/titleInput"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <EditText
+                android:id="@+id/titleInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:autofillHints=""
+                android:contentDescription="@string/todo_title_desc"
+                app:layout_constraintBottom_toTopOf="@+id/projectLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleLabel"
+                />
+            <TextView
+                android:id="@+id/projectLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/titleInput"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/statusLabel"
+                android:labelFor="@+id/project"
+                style="@style/formLabel"
+                android:text="@string/todo_project_name"
+                />
     <TextView
         android:id="@+id/statusLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/todo_status"
+        style="@style/formLabel"
         android:labelFor="@+id/status"
-        app:layout_constraintTop_toBottomOf="@+id/project"
+        app:layout_constraintTop_toBottomOf="@+id/projectLabel"
         app:layout_constraintStart_toStartOf="parent"
         android:contentDescription="@string/todo_status"
-        app:layout_constraintBottom_toTopOf="@+id/status"
-
+        app:layout_constraintBottom_toTopOf="@+id/descriptionLabel"
+        />
+    <TextView
+        android:id="@+id/descriptionLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/todo_description"
+        style="@style/formLabel"
+        android:contentDescription="@string/todo_description_desc"
+        app:layout_constraintTop_toBottomOf="@+id/statusLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/labelBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="projectLabel,descriptionLabel,statusLabel"
+        app:barrierDirection="end"
+        />
+    <TextView
+        android:id="@+id/projectName"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/labelBarrier"
+        app:layout_constraintTop_toTopOf="@+id/projectLabel"
+        android:layout_marginStart="10dp"
         />
     <Spinner
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/todo_status_modes"
-        app:layout_constraintTop_toBottomOf="@+id/statusLabel"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/statusLabel"
+        app:layout_constraintStart_toStartOf="@+id/labelBarrier"
         android:contentDescription="@string/todo_status"
-        app:layout_constraintBottom_toTopOf="@+id/titleLabel"
-
     />
+
     <TextView
-        android:id="@+id/titleLabel"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:text="@string/todo_title"
-        android:labelFor="@+id/titleInput"
-        app:layout_constraintTop_toBottomOf="@+id/status"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/titleInput"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        />
-
-    <EditText
-        android:id="@+id/titleInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:autofillHints=""
-        android:contentDescription="@string/todo_title_desc"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleLabel" />
-    <TextView
-        android:id="@+id/descriptionLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/todo_description"
-        android:contentDescription="@string/todo_description_desc"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleInput"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionInput"
-        />
-
-    <EditText
         android:id="@+id/descriptionInput"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -110,11 +110,14 @@
         android:background="#eee"
         android:autofillHints=""
         android:gravity="top"
-
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toTopOf="@+id/descriptionLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionLabel" />
+        app:layout_constraintStart_toStartOf="@id/labelBarrier"
+         />
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <Button

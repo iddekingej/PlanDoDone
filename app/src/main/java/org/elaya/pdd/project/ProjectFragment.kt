@@ -13,7 +13,7 @@ import org.elaya.pdd.tools.fragments.FragmentBase
 
 class ProjectFragment:FragmentBase(),ProjectEditSaveHandler {
     private var project:Project?=null
-    private var todoList:TodoList?=null;
+    private var todoList:TodoList?=null
 
     companion object{
         const val P_ProjectID="projectId"

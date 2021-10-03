@@ -16,7 +16,7 @@ open class FragmentBase : Fragment(),FragmentResultListener {
     companion object{
         const val P_KEY="FRAGMENT_KEY"
     }
-    private var menu:Menu?=null;
+    private var menu:Menu?=null
     protected fun getFragmentKey():String?
     {
         return javaClass.canonicalName
@@ -24,12 +24,12 @@ open class FragmentBase : Fragment(),FragmentResultListener {
 
     protected fun getMenu():Menu?
     {
-        return menu;
+        return menu
     }
 
     protected open fun getMenuId():Int
     {
-        return -1;
+        return -1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ open class FragmentBase : Fragment(),FragmentResultListener {
         if(lKey != null) {
             setFragmentResultListener(lKey, this::onFragmentResult)
         }
-        @MenuRes val lMenu=getMenuId();
+        @MenuRes val lMenu=getMenuId()
         if(lMenu != -1){
             setHasOptionsMenu(true)
         }
@@ -51,10 +51,10 @@ open class FragmentBase : Fragment(),FragmentResultListener {
 
     override fun onCreateOptionsMenu(pMenu: Menu, pInflater: MenuInflater) {
         super.onCreateOptionsMenu(pMenu, pInflater)
-        @MenuRes val lMenuId=getMenuId();
+        @MenuRes val lMenuId=getMenuId()
         if(lMenuId != -1){
             pInflater.inflate(lMenuId,pMenu)
-            menu=pMenu;
+            menu=pMenu
             afterMenu(pMenu)
         }
 
@@ -62,20 +62,20 @@ open class FragmentBase : Fragment(),FragmentResultListener {
 
     fun showKeyboard()
     {
-        val lActivity=activity;
+        val lActivity=activity
         if(lActivity != null) {
-            val lImm = lActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
-            lImm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            val lImm = lActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            lImm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
         }
     }
 
     fun hideKeyboard()
     {
-        val lActivity=activity;
+        val lActivity=activity
 
         if(lActivity != null) {
 
-            val lImm = lActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
+            val lImm = lActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             lImm.hideSoftInputFromWindow(lActivity.window.decorView.windowToken,0)
         }
     }

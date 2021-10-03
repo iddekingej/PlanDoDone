@@ -47,7 +47,7 @@ class Project: Parcelable {
     }
 
     override fun toString(): String {
-        return _name;
+        return _name
     }
 
     companion object CREATOR : Parcelable.Creator<Project> {

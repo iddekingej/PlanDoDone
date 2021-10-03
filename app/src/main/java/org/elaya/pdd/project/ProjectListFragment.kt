@@ -19,7 +19,7 @@ import org.elaya.pdd.tools.fragments.FragmentBase
 class ProjectListFragment : FragmentBase() {
     private var binding:FragmentProcesListBinding?=null
     private var projectHandler:ProjectListViewHandler?=null
-    private var todoListHandler: TodoList?=null;
+    private var todoListHandler: TodoList?=null
 
     override fun onCreateView(
         pInflater: LayoutInflater, pContainer: ViewGroup?,
@@ -80,11 +80,11 @@ class ProjectListFragment : FragmentBase() {
                 lBinding.projectAddHelp.visibility = View.GONE
                 lBinding.projectList.visibility = View.VISIBLE
             }
-            val lTodoList = todoListHandler;
+            val lTodoList = todoListHandler
             if(lTodoList != null) {
                 val lTodos = lDb.getActiveTodos()
-                val lIsEmpty=lTodos.isEmpty();
-                lBinding.todoList.visibility=if(lIsEmpty){View.GONE} else {View.VISIBLE}
+                val lIsEmpty=lTodos.isEmpty()
+                lBinding.todoListScroll.visibility=if(lIsEmpty){View.GONE} else {View.VISIBLE}
                 if(!lTodos.isEmpty()) {
                     lTodoList.makeList(layoutInflater, lTodos)
                 }

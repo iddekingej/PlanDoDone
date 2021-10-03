@@ -13,21 +13,25 @@ abstract class TodoList(pParent: TableLayout): ListViewHandler<TableLayout, Todo
 
     override fun fillData(pView: TodoIncItemBinding, pData: Todo) {
         pView.title.text=pData.title
-        val lStatusDesc=getResources().getStringArray(R.array.todo_status_modes);
+        val lStatusDesc=getResources().getStringArray(R.array.todo_status_modes)
 
-        val lStatus=pData.status;
+        val lStatus=pData.status
         if(lStatus==Todo.STATUS_FINISHED || lStatus==Todo.STATUS_STOPPED) {
             pView.title.setBackgroundResource(R.drawable.strike)
         }
         if(lStatus>=0 && lStatus<lStatusDesc.size) {
-            pView.status.contentDescription = lStatusDesc[lStatus];
-            @DrawableRes var lImage: Int = -1;
-            if (lStatus == Todo.STATUS_STARTED) {
-                lImage = R.drawable.todo_start
-            } else if (lStatus == Todo.STATUS_NEW) {
-                lImage = R.drawable.todo_new
-            } else if (lStatus == Todo.STATUS_STOPPED) {
-                lImage = R.drawable.todo_stopped
+            pView.status.contentDescription = lStatusDesc[lStatus]
+            @DrawableRes var lImage: Int = -1
+            when (lStatus) {
+                Todo.STATUS_STARTED -> {
+                    lImage = R.drawable.todo_start
+                }
+                Todo.STATUS_NEW -> {
+                    lImage = R.drawable.todo_new
+                }
+                Todo.STATUS_STOPPED -> {
+                    lImage = R.drawable.todo_stopped
+                }
             }
             if (lImage != -1) {
                 pView.status.setImageResource(lImage)
@@ -36,12 +40,12 @@ abstract class TodoList(pParent: TableLayout): ListViewHandler<TableLayout, Todo
     }
 
     override fun checkData(pObject: Any): Boolean {
-        return pObject is Todo;
+        return pObject is Todo
     }
 
 
 
     override fun makeView(pInflater: LayoutInflater, pParent: ViewGroup): TodoIncItemBinding {
-        return TodoIncItemBinding.inflate(pInflater,pParent,true);
+        return TodoIncItemBinding.inflate(pInflater,pParent,true)
     }
 }

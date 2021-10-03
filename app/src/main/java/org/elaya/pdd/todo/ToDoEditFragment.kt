@@ -11,22 +11,27 @@ import org.elaya.pdd.R
 import org.elaya.pdd.databinding.FragmentTodoEditBinding
 import org.elaya.pdd.project.Project
 import org.elaya.pdd.settings.Globals
+import org.elaya.pdd.tools.data.ArraySpinnerAdapter
 import org.elaya.pdd.tools.fragments.FragmentBase
 
-class ToDoEditFragment : FragmentBase(),AdapterView.OnItemSelectedListener {
+class ToDoEditFragment : FragmentBase(){
     private var binding:FragmentTodoEditBinding?=null
     private var project:Project?=null
-    private var todo:Todo?=null;
-    private var projectAdapter:ArrayAdapter<Project>?=null;
-    private var selectedProject:Project?=null;
+    private var todo:Todo?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val lArguments=arguments
         if(lArguments != null) {
-            project = lArguments.get(P_PROJECT) as Project?
-            todo=lArguments.get(P_TODO) as Todo?
 
+            todo=lArguments.get(P_TODO) as Todo?
+            val lTodo=todo;
+            if(lTodo != null){
+                val lProjectId=lTodo.projectId
+                project = Globals.db?.getProject(lProjectId)
+            } else {
+                project = lArguments.get(P_PROJECT) as Project?
+            }
         }
     }
 
@@ -34,7 +39,7 @@ class ToDoEditFragment : FragmentBase(),AdapterView.OnItemSelectedListener {
     override fun getMenuId():Int
     {
 
-            return R.menu.menu_todo_edit;
+            return R.menu.menu_todo_edit
 
     }
 
@@ -44,28 +49,28 @@ class ToDoEditFragment : FragmentBase(),AdapterView.OnItemSelectedListener {
 
         if(pItem.itemId==R.id.delete){
                if(todo != null){
-                   val lDb=Globals.db;
-                   val lTodo=todo;
+                   val lDb=Globals.db
+                   val lTodo=todo
                    if(lTodo != null && lDb != null){
                        lDb.deleteTodo(lTodo.id)
                    }
                }
                goBack()
         }
-        return super.onOptionsItemSelected(pItem);
+        return super.onOptionsItemSelected(pItem)
 
     }
 
     private fun getIndexOf(pInfo:List<Project>,pProjectId:Int):Int
     {
-        var lCnt:Int=0;
-        pInfo.forEach(){
+        var lCnt =0
+        pInfo.forEach {
             if(it.id==pProjectId){
-                return lCnt;
+                return lCnt
             }
-            lCnt++;
+            lCnt++
         }
-        return -1;
+        return -1
     }
 
 
@@ -78,31 +83,22 @@ class ToDoEditFragment : FragmentBase(),AdapterView.OnItemSelectedListener {
 
         binding=lBinding
         val lProject=project
-        val lTodo=todo;
-        var lProjectId:Int=0;
+        val lTodo=todo
+
         if(lTodo != null) {
             lBinding.titleInput.setText(lTodo.title)
             lBinding.descriptionInput.setText(lTodo.description)
             lBinding.status.setSelection(lTodo.status)
-            lProjectId=lTodo.projectId
-        } else if(lProject != null){
-            lProjectId=lProject.id
-
         }
-        val lDb=Globals.db;
-        val lActivity=activity;
-        if(lDb != null && lActivity != null) {
-            val lList=lDb.getProjects();
-            projectAdapter = ArrayAdapter<Project>(lActivity,android.R.layout.simple_list_item_1,lList);
-
-            lBinding.project.adapter=projectAdapter;
-            lBinding.project.onItemSelectedListener=this;
-            lBinding.project.setSelection(getIndexOf(lList,lProjectId))
-
+        if(lProject != null){
+            lBinding.projectName.text=lProject.name;
         }
+
+
         lBinding.titleInput.requestFocus()
         lBinding.saveButton.setOnClickListener(this::saveTodo)
         lBinding.cancelButton.setOnClickListener(this::cancelPressed)
+
         return lBinding.root
     }
 
@@ -119,33 +115,25 @@ class ToDoEditFragment : FragmentBase(),AdapterView.OnItemSelectedListener {
     override fun afterMenu(pMenu: Menu) {
         super.afterMenu(pMenu)
 
-        val lItem=pMenu.findItem(R.id.delete);
+        val lItem=pMenu.findItem(R.id.delete)
         lItem?.isVisible = todo != null
 
     }
 
     private fun cancelPressed(pView:View){
-        goBack();
+        goBack()
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-        selectedProject=parent?.getItemAtPosition(position) as Project
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("Not yet implemented")
-    }
 
     private fun saveTodo(pView:View){
         val lBinding=binding
         val lDs=Globals.db
         if(lBinding != null && lDs != null) {
-            val lTodo = todo;
+            val lTodo = todo
             val lTitle = lBinding.titleInput.text.toString()
             val lDescription = lBinding.descriptionInput.text.toString()
-            val lStatus=lBinding.status.selectedItemPosition;
-            val lProject = selectedProject
+            val lStatus=lBinding.status.selectedItemPosition
+            val lProject = project
             if (lProject != null) {
                if (lTodo == null) {
                    lDs.addTodo(lProject.id,lStatus, lTitle, lDescription)
