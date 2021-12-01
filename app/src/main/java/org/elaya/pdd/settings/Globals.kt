@@ -4,11 +4,11 @@ import android.content.Context
 import org.elaya.pdd.db.DataSource
 
 object Globals {
-    private var _db:DataSource?=null
+    private var vDb:DataSource?=null
     val db: DataSource?
-    get()=_db
+    get()=vDb
 
     fun applicationSetup(pContext:Context){
-        _db=DataSource(pContext)
+        vDb=DataSource(pContext)
     }
 }

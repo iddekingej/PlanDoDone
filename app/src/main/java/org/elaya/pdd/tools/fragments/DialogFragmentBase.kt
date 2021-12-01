@@ -1,6 +1,10 @@
 package org.elaya.pdd.tools.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 
@@ -17,5 +21,8 @@ open class DialogFragmentBase:DialogFragment(){
         //todo exception when result is not set
         dismiss()
     }
+
+
+
 
 }

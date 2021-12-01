@@ -1,10 +1,7 @@
 package org.elaya.pdd.todo
 
 import android.os.Bundle
-import android.provider.Settings
 import android.view.*
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
 import org.elaya.pdd.R
@@ -18,6 +15,7 @@ class ToDoEditFragment : FragmentBase(){
     private var binding:FragmentTodoEditBinding?=null
     private var project:Project?=null
     private var todo:Todo?=null
+    private var projectAdapter:ArraySpinnerAdapter<Project>?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +23,12 @@ class ToDoEditFragment : FragmentBase(){
         if(lArguments != null) {
 
             todo=lArguments.get(P_TODO) as Todo?
-            val lTodo=todo;
-            if(lTodo != null){
+            val lTodo=todo
+            project = if(lTodo != null){
                 val lProjectId=lTodo.projectId
-                project = Globals.db?.getProject(lProjectId)
+                Globals.db?.getProject(lProjectId)
             } else {
-                project = lArguments.get(P_PROJECT) as Project?
+                lArguments.get(P_PROJECT) as Project?
             }
         }
     }
@@ -87,14 +85,24 @@ class ToDoEditFragment : FragmentBase(){
 
         if(lTodo != null) {
             lBinding.titleInput.setText(lTodo.title)
-            lBinding.descriptionInput.setText(lTodo.description)
+            lBinding.descriptionInput.text = lTodo.description
             lBinding.status.setSelection(lTodo.status)
         }
-        if(lProject != null){
-            lBinding.projectName.text=lProject.name;
+        val lDb=Globals.db
+        val lContext = context
+        if(lDb!= null && lContext != null && lProject != null) {
+            val lProjects = lDb.getProjects()
+
+
+            projectAdapter = ArraySpinnerAdapter(
+                lContext,
+                android.R.layout.simple_spinner_dropdown_item,
+                lProjects
+            )
+
+            lBinding.projectSelection.adapter = projectAdapter
+            lBinding.projectSelection.setSelection(getIndexOf(lProjects,lProject.id))
         }
-
-
         lBinding.titleInput.requestFocus()
         lBinding.saveButton.setOnClickListener(this::saveTodo)
         lBinding.cancelButton.setOnClickListener(this::cancelPressed)
@@ -133,16 +141,19 @@ class ToDoEditFragment : FragmentBase(){
             val lTitle = lBinding.titleInput.text.toString()
             val lDescription = lBinding.descriptionInput.text.toString()
             val lStatus=lBinding.status.selectedItemPosition
-            val lProject = project
-            if (lProject != null) {
-               if (lTodo == null) {
-                   lDs.addTodo(lProject.id,lStatus, lTitle, lDescription)
+            val lProjectSelection=lBinding.projectSelection.selectedItem
+
+            if(lProjectSelection is Project) {
+                if (lTodo == null) {
+                    lDs.addTodo(lProjectSelection.id, lStatus, lTitle, lDescription)
                 } else {
-                    lDs.editTodo(lTodo.id,lProject.id,lStatus, lTitle, lDescription)
+                    lDs.editTodo(lTodo.id, lProjectSelection.id, lStatus, lTitle, lDescription)
                 }
+
             }
+            goBack()
         }
-        goBack()
+
     }
 
     companion object {

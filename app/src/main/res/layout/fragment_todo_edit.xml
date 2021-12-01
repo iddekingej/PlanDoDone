@@ -84,13 +84,15 @@
         app:constraint_referenced_ids="projectLabel,descriptionLabel,statusLabel"
         app:barrierDirection="end"
         />
-    <TextView
-        android:id="@+id/projectName"
+    <Spinner
+        android:id="@+id/projectSelection"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/labelBarrier"
         app:layout_constraintTop_toTopOf="@+id/projectLabel"
         android:layout_marginStart="10dp"
+        android:contentDescription="@string/todo_project_name"
+
         />
     <Spinner
         android:id="@+id/status"
@@ -100,7 +102,9 @@
         app:layout_constraintTop_toTopOf="@+id/statusLabel"
         app:layout_constraintStart_toStartOf="@+id/labelBarrier"
         android:contentDescription="@string/todo_status"
-    />
+        android:layout_marginStart="10dp"
+
+        />
 
     <TextView
         android:id="@+id/descriptionInput"

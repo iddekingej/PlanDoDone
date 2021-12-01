@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
@@ -20,11 +21,6 @@ open class FragmentBase : Fragment(),FragmentResultListener {
     protected fun getFragmentKey():String?
     {
         return javaClass.canonicalName
-    }
-
-    protected fun getMenu():Menu?
-    {
-        return menu
     }
 
     protected open fun getMenuId():Int
@@ -106,6 +102,12 @@ open class FragmentBase : Fragment(),FragmentResultListener {
             lTransaction.add(lFragment, pTag).commitAllowingStateLoss()
         }
     }
+
+   protected open fun hasKeyboard():Boolean
+    {
+        return false;
+    }
+
 
     protected inline fun startFragment( pTag:String?, pMakeFragment:()->Fragment) {
         val lActivity=activity

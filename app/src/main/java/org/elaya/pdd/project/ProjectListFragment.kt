@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import org.elaya.pdd.databinding.FragmentProcesListBinding
 import org.elaya.pdd.settings.Globals
+import org.elaya.pdd.todo.ToDoEditFragment
 import org.elaya.pdd.todo.Todo
 import org.elaya.pdd.todo.TodoList
 import org.elaya.pdd.tools.fragments.FragmentBase
@@ -35,9 +36,11 @@ class ProjectListFragment : FragmentBase() {
         }
         lBinding.projectAdd.setOnClickListener(this::newProject)
         todoListHandler=object:TodoList(lBinding.todoList){
-            override fun onClickEvent(pData: Todo) {
+            override fun onClickEvent(pData:Todo){
+                startFragment("editTodo"){
+                    ToDoEditFragment.newInstance(pData)
+                }
             }
-
         }
         return lBinding.root
     }

@@ -2,13 +2,9 @@ package org.elaya.pdd.project
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import androidx.fragment.app.DialogFragment
+import android.view.*
+import androidx.core.util.rangeTo
 import org.elaya.pdd.databinding.DialogProjectBinding
-import androidx.fragment.app.setFragmentResult
 import org.elaya.pdd.tools.fragments.DialogFragmentBase
 
 class ProjectEditFragment: DialogFragmentBase() {
@@ -41,7 +37,7 @@ class ProjectEditFragment: DialogFragmentBase() {
         if(lBinding != null) {
             val lBundle = Bundle().apply {
                 putInt(P_ID, projectId)
-                putString(P_NAME, lBinding.personNameEdit.text.toString())
+                putString(P_NAME, lBinding.projectNameEdit.text.toString())
                 putBoolean(P_IS_ACTIVE,lBinding.isActive.isChecked)
             }
 
@@ -54,6 +50,7 @@ class ProjectEditFragment: DialogFragmentBase() {
     {
         dismiss()
     }
+
 
     override fun onCreateView(
         pInflater: LayoutInflater,
@@ -70,11 +67,11 @@ class ProjectEditFragment: DialogFragmentBase() {
             lBinding.isActive.isChecked=true
             projectId=-1
         } else {
-            lBinding.personNameEdit.setText(lArguments.getString(P_NAME,""))
+            lBinding.projectNameEdit.setText(lArguments.getString(P_NAME,""))
             lBinding.isActive.isChecked=lArguments.getBoolean(P_IS_ACTIVE)
             projectId=lArguments.getInt(P_ID,-1)
         }
-        binding=lBinding
+
         return lBinding.root
     }
 
@@ -82,15 +79,15 @@ class ProjectEditFragment: DialogFragmentBase() {
 
     override fun onResume() {
         super.onResume()
-             val lDialog:Dialog?=dialog
+        val lDialog:Dialog?=dialog
         if(lDialog != null) {
-                val lWindow: Window?=lDialog.window
+            val lWindow: Window?=lDialog.window
             if(lWindow != null) {
                     val params = lWindow.attributes
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT
+                    params.width = ViewGroup.LayoutParams.MATCH_PARENT
                     lWindow.attributes=params
             }
-            }
+        }
     }
 
 

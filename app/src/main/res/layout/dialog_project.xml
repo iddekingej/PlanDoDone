@@ -11,22 +11,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:labelFor="@+id/personNameEdit"
+        android:labelFor="@+id/projectNameEdit"
         android:text="@string/project_edit_name"
-        app:layout_constraintBottom_toTopOf="@+id/personNameEdit"
+        app:layout_constraintBottom_toTopOf="@+id/projectNameEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/personNameEdit"
+        android:id="@+id/projectNameEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:autofillHints=""
-        android:inputType="textPersonName"
+        android:inputType=""
+        android:focusable="true"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personNameLabel" />
@@ -39,7 +41,7 @@
         android:text="@string/project_edit_active"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personNameEdit"
+        app:layout_constraintTop_toBottomOf="@+id/projectNameEdit"
         />
     <Button
         android:id="@+id/save"
