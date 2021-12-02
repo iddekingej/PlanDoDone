@@ -103,10 +103,7 @@ open class FragmentBase : Fragment(),FragmentResultListener {
         }
     }
 
-   protected open fun hasKeyboard():Boolean
-    {
-        return false;
-    }
+
 
 
     protected inline fun startFragment( pTag:String?, pMakeFragment:()->Fragment) {

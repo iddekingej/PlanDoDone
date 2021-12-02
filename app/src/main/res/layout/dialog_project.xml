@@ -60,7 +60,16 @@
         android:text="@string/label_gen_cancel"
         android:layout_margin="8dp"
         app:layout_constraintStart_toEndOf="@+id/save"
+        app:layout_constraintEnd_toStartOf="@+id/remove"
         app:layout_constraintTop_toBottomOf="@+id/isActive"
         />
-
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_gen_delete"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toEndOf="@+id/cancel"
+        app:layout_constraintTop_toBottomOf="@+id/isActive"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

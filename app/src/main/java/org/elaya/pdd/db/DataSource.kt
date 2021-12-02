@@ -22,8 +22,8 @@ class DataSource(pContext:Context) {
 
     
 
-    private fun hasResult(pQuery:String):Boolean{
-        rawQuery(pQuery).use{
+    private fun hasResult(pQuery:String, pParameters:Array<String> ):Boolean{
+        db.rawQuery(pQuery,pParameters).use{
             return it.moveToFirst()
         }
     }
@@ -92,6 +92,12 @@ class DataSource(pContext:Context) {
 
     }
 
+    fun projectHasTodo(pProjectId:Int):Boolean
+    {
+        return hasResult("select 1 as dm from "+Todo.TABLE_NAME+" where id_project=? limit 1",arrayOf(pProjectId.toString()) );
+    }
+
+
 
     fun addTodo(pProjectId:Int,pStatus:Int,pTitle:String, pDescription:String){
         val lValues=ContentValues()
@@ -131,9 +137,11 @@ class DataSource(pContext:Context) {
         db.delete(Todo.TABLE_NAME,Todo.F_ID+"=?",arrayOf(pTodoId.toString()))
     }
 
-    fun hasProjects():Boolean
+    fun deleteProject(pProjectId: Int)
     {
-        return hasResult("select 1 from project")
+        db.delete(Project.TABLE_NAME,Project.F_ID+"=?",arrayOf(pProjectId.toString()))
     }
+
+
 
 }

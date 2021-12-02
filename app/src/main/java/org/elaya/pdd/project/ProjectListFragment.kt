@@ -102,11 +102,7 @@ class ProjectListFragment : FragmentBase() {
     }
 
     override fun onFragmentResult(pRequestKey: String, pResult: Bundle) {
-                val lId=pResult.getInt(ProjectEditFragment.P_ID)
-        val lName=pResult.getString(ProjectEditFragment.P_NAME)
-        val lIsActive=pResult.getBoolean(ProjectEditFragment.P_IS_ACTIVE,false)
-        Globals.db?.saveProject(lId,lName?:"",lIsActive)
-                setupProjectList()
+           setupProjectList()
     }
 
     companion object {

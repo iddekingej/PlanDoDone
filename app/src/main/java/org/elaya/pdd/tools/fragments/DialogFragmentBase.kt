@@ -15,7 +15,7 @@ open class DialogFragmentBase:DialogFragment(){
         if(lArguments != null) {
             val lKey=lArguments.getString(FragmentBase.P_KEY)
             if(lKey != null){
-                setFragmentResult(lKey,pResults)
+                parentFragmentManager.setFragmentResult(lKey,pResults)
             }
         }
         //todo exception when result is not set

@@ -11,7 +11,8 @@ import org.elaya.pdd.todo.Todo
 import org.elaya.pdd.todo.TodoList
 import org.elaya.pdd.tools.fragments.FragmentBase
 
-class ProjectFragment:FragmentBase(),ProjectEditSaveHandler {
+class ProjectFragment:FragmentBase() {
+    private var projectId:Int=-1;
     private var project:Project?=null
     private var todoList:TodoList?=null
 
@@ -31,11 +32,13 @@ class ProjectFragment:FragmentBase(),ProjectEditSaveHandler {
 
 
 
-    override fun saveProject(pId: Int, pName: String, pIsActive: Boolean) {
-        Globals.db?.saveProject(pId,pName,pIsActive)
-        project?.setInfo(pName,pIsActive)
-        val lBinding=binding
-        lBinding?.projectName?.text = pName
+    override fun onFragmentResult(pRequestKey: String, pResult: Bundle) {
+        project = Globals.db?.getProject(projectId)
+        if(project==null){
+            goBack()
+        } else {
+            binding?.projectName?.text = project?.name
+        }
 
     }
 
@@ -44,17 +47,13 @@ class ProjectFragment:FragmentBase(),ProjectEditSaveHandler {
     private fun editProject(pView: View){
         val lProject=project
         if(lProject != null) {
-            val lActivity=activity
-            if(lActivity != null) {
-                val lTransaction = lActivity.supportFragmentManager.beginTransaction()
-                lTransaction.add(
+
+            startDialogFragment("projectEdit") {
                     ProjectEditFragment.newInstance(
                         lProject.id,
                         lProject.name,
                         lProject.isActive
-                    ), "projectEdit"
-                )
-                    .commitAllowingStateLoss()
+                    )
             }
         }
     }
@@ -70,6 +69,7 @@ class ProjectFragment:FragmentBase(),ProjectEditSaveHandler {
 
         val lProjectId=arguments?.getInt(P_ProjectID,-1)
         if(lProjectId != null) {
+            projectId=lProjectId;
             val lProject = Globals.db?.getProject(lProjectId)
             project = lProject
             if (lProject != null) {

@@ -58,5 +58,8 @@ class Project: Parcelable {
         override fun newArray(size: Int): Array<Project?> {
             return arrayOfNulls(size)
         }
+
+        const val TABLE_NAME="project"
+        const val F_ID="id";
     }
 }

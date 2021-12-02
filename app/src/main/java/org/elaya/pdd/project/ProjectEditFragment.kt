@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.util.rangeTo
 import org.elaya.pdd.databinding.DialogProjectBinding
+import org.elaya.pdd.settings.Globals
 import org.elaya.pdd.tools.fragments.DialogFragmentBase
 
 class ProjectEditFragment: DialogFragmentBase() {
@@ -35,13 +36,9 @@ class ProjectEditFragment: DialogFragmentBase() {
     private fun dialogSave(pView:View){
         val lBinding=binding
         if(lBinding != null) {
-            val lBundle = Bundle().apply {
-                putInt(P_ID, projectId)
-                putString(P_NAME, lBinding.projectNameEdit.text.toString())
-                putBoolean(P_IS_ACTIVE,lBinding.isActive.isChecked)
-            }
+            Globals.db?.saveProject(projectId,lBinding.projectNameEdit.text.toString(),lBinding.isActive.isChecked)
 
-            dismissResult(lBundle)
+            dismissResult(Bundle())
         } else {
             dismiss()
         }
@@ -51,6 +48,11 @@ class ProjectEditFragment: DialogFragmentBase() {
         dismiss()
     }
 
+    private fun deleteProject(pView:View)
+    {
+        Globals.db?.deleteProject(projectId);
+        dismissResult(Bundle())
+    }
 
     override fun onCreateView(
         pInflater: LayoutInflater,
@@ -61,15 +63,18 @@ class ProjectEditFragment: DialogFragmentBase() {
         val lBinding=DialogProjectBinding.inflate(pInflater,pContainer,false)
         lBinding.cancel.setOnClickListener(this::dialogCancel)
         lBinding.save.setOnClickListener(this::dialogSave)
-
+        lBinding.remove.setOnClickListener(this::deleteProject)
+        binding=lBinding;
         val lArguments=arguments
         if(lArguments==null|| !lArguments.containsKey(P_NAME)){
             lBinding.isActive.isChecked=true
             projectId=-1
+            lBinding.remove.visibility=View.GONE
         } else {
             lBinding.projectNameEdit.setText(lArguments.getString(P_NAME,""))
             lBinding.isActive.isChecked=lArguments.getBoolean(P_IS_ACTIVE)
             projectId=lArguments.getInt(P_ID,-1)
+            lBinding.remove.visibility=if(Globals.db?.projectHasTodo(projectId)==true){ View.GONE} else {View.VISIBLE}
         }
 
         return lBinding.root
