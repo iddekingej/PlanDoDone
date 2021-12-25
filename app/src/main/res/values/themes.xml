@@ -16,7 +16,11 @@
 
     </style>
 
-
+    <style name="title" parent="baseTextView">
+        <item name="android:background">@color/gen_title_background</item>
+        <item name="android:textColor">@color/gen_title_text_color</item>
+        <item name="android:textAlignment">center</item>
+    </style>
     <style name="baseTextView" parent="android:Widget.DeviceDefault.TextView">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>

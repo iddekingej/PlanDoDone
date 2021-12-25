@@ -7,6 +7,7 @@
     <string name="project_add_help">Please first add a project and than todo items.</string>
     <string name="project_edit_name">Project name</string>
     <string name="project_edit_active">Project active?</string>
+    <string name="project_active_todo">Active todos</string>
     <string name="todo_edit_project">Edit project</string>
     <string name="todo_add_todo">Add todo</string>
     <string name="todo_title">Title</string>

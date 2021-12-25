@@ -1,11 +1,13 @@
 package org.elaya.pdd.tools.fragments
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
@@ -54,6 +56,15 @@ open class FragmentBase : Fragment(),FragmentResultListener {
             afterMenu(pMenu)
         }
 
+    }
+
+    @ColorInt fun  getColor(@ColorRes pColor:Int):Int
+    {
+        val lContext=context
+        if(lContext != null){
+            return lContext.getColor(pColor)
+        }
+        return Color.TRANSPARENT;
     }
 
     fun showKeyboard()

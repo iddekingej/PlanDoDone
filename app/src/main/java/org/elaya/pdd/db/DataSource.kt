@@ -94,7 +94,7 @@ class DataSource(pContext:Context) {
 
     fun projectHasTodo(pProjectId:Int):Boolean
     {
-        return hasResult("select 1 as dm from "+Todo.TABLE_NAME+" where id_project=? limit 1",arrayOf(pProjectId.toString()) );
+        return hasResult("select 1 as dm from "+Todo.TABLE_NAME+" where id_project=? limit 1",arrayOf(pProjectId.toString()) )
     }
 
 

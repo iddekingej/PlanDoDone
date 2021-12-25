@@ -1,9 +1,17 @@
 package org.elaya.pdd.project
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import androidx.viewpager2.widget.ViewPager2
+import org.elaya.pdd.R
 import org.elaya.pdd.databinding.FragmentProcesListBinding
 import org.elaya.pdd.settings.Globals
 import org.elaya.pdd.todo.ToDoEditFragment
@@ -21,7 +29,8 @@ class ProjectListFragment : FragmentBase() {
     private var binding:FragmentProcesListBinding?=null
     private var projectHandler:ProjectListViewHandler?=null
     private var todoListHandler: TodoList?=null
-
+    private var projectPager:ProjectPageAdapter?=null;
+    private var currentSelectedProject:Int=-1;
     override fun onCreateView(
         pInflater: LayoutInflater, pContainer: ViewGroup?,
         pSavedInstanceState: Bundle?
@@ -35,16 +44,46 @@ class ProjectListFragment : FragmentBase() {
             }
         }
         lBinding.projectAdd.setOnClickListener(this::newProject)
-        todoListHandler=object:TodoList(lBinding.todoList){
-            override fun onClickEvent(pData:Todo){
-                startFragment("editTodo"){
-                    ToDoEditFragment.newInstance(pData)
+        val lProjectPageAdapter=ProjectPageAdapter(this)
+        projectPager=lProjectPageAdapter
+        lBinding.todoListPager.adapter=lProjectPageAdapter
+        lBinding.todoListPager.registerOnPageChangeCallback(
+            object: ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(pPosition: Int) {
+                    super.onPageSelected(pPosition)
+                    todoListPageSelected(pPosition )
                 }
             }
-        }
+        )
         return lBinding.root
     }
 
+    private fun setProjectColor(pIndex:Int,pSelected:Boolean)
+    {
+        val lBinding=binding;
+        if(lBinding != null) {
+            val lView = lBinding.projectList.getChildAt(pIndex) as LinearLayout;
+            lView.setBackgroundColor(if(pSelected){ getColor(R.color.color_selected)} else {Color.TRANSPARENT})
+            val lTextView = lView.getChildAt(0) as TextView;
+            lTextView.setTextColor(getColor(if(pSelected){R.color.color_text_selected} else {R.color.color_text_not_selected}));
+        }
+    }
+
+    private fun todoListPageSelected(pPosition:Int)
+    {
+        val lBinding=binding;
+        if(lBinding != null) {
+            if (currentSelectedProject >=0 && currentSelectedProject<lBinding.projectList.childCount) {
+                setProjectColor(currentSelectedProject,false)
+            }
+            val lSelected=pPosition-1;
+            if(lSelected>=0 && lSelected<=lBinding.projectList.childCount){
+                setProjectColor(lSelected,true)
+            }
+            currentSelectedProject=lSelected;
+        }
+
+    }
 
     private fun clickItem(pProject:Project)
     {
@@ -84,16 +123,8 @@ class ProjectListFragment : FragmentBase() {
                 lBinding.projectList.visibility = View.VISIBLE
             }
             val lTodoList = todoListHandler
-            if(lTodoList != null) {
-                val lTodos = lDb.getActiveTodos()
-                val lIsEmpty=lTodos.isEmpty()
-                lBinding.todoListScroll.visibility=if(lIsEmpty){View.GONE} else {View.VISIBLE}
-                if(!lTodos.isEmpty()) {
-                    lTodoList.makeList(layoutInflater, lTodos)
-                }
-            }
+            projectPager?.refreshProjectList()
         }
-
     }
 
     override fun onResume() {

@@ -60,6 +60,6 @@ class Project: Parcelable {
         }
 
         const val TABLE_NAME="project"
-        const val F_ID="id";
+        const val F_ID="id"
     }
 }

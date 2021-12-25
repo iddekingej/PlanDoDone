@@ -2,8 +2,10 @@ package org.elaya.pdd.project
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.*
-import androidx.core.util.rangeTo
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import org.elaya.pdd.databinding.DialogProjectBinding
 import org.elaya.pdd.settings.Globals
 import org.elaya.pdd.tools.fragments.DialogFragmentBase
@@ -50,7 +52,7 @@ class ProjectEditFragment: DialogFragmentBase() {
 
     private fun deleteProject(pView:View)
     {
-        Globals.db?.deleteProject(projectId);
+        Globals.db?.deleteProject(projectId)
         dismissResult(Bundle())
     }
 
@@ -64,7 +66,7 @@ class ProjectEditFragment: DialogFragmentBase() {
         lBinding.cancel.setOnClickListener(this::dialogCancel)
         lBinding.save.setOnClickListener(this::dialogSave)
         lBinding.remove.setOnClickListener(this::deleteProject)
-        binding=lBinding;
+        binding=lBinding
         val lArguments=arguments
         if(lArguments==null|| !lArguments.containsKey(P_NAME)){
             lBinding.isActive.isChecked=true

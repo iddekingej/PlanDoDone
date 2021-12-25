@@ -12,7 +12,7 @@ import org.elaya.pdd.todo.TodoList
 import org.elaya.pdd.tools.fragments.FragmentBase
 
 class ProjectFragment:FragmentBase() {
-    private var projectId:Int=-1;
+    private var projectId:Int=-1
     private var project:Project?=null
     private var todoList:TodoList?=null
 
@@ -69,7 +69,7 @@ class ProjectFragment:FragmentBase() {
 
         val lProjectId=arguments?.getInt(P_ProjectID,-1)
         if(lProjectId != null) {
-            projectId=lProjectId;
+            projectId=lProjectId
             val lProject = Globals.db?.getProject(lProjectId)
             project = lProject
             if (lProject != null) {
