@@ -22,7 +22,7 @@ class DataSource(pContext:Context) {
 
     
 
-    private fun hasResult(pQuery:String, pParameters:Array<String> ):Boolean{
+    private fun hasResult(pQuery:String, pParameters:Array<String>? ):Boolean{
         db.rawQuery(pQuery,pParameters).use{
             return it.moveToFirst()
         }
@@ -98,6 +98,10 @@ class DataSource(pContext:Context) {
     }
 
 
+    fun hasTodo():Boolean
+    {
+        return hasResult("select 1 as dm from "+Todo.TABLE_NAME,null);
+    }
 
     fun addTodo(pProjectId:Int,pStatus:Int,pTitle:String, pDescription:String){
         val lValues=ContentValues()

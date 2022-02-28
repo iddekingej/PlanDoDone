@@ -122,8 +122,13 @@ class ProjectListFragment : FragmentBase() {
                 lBinding.projectAddHelp.visibility = View.GONE
                 lBinding.projectList.visibility = View.VISIBLE
             }
-            val lTodoList = todoListHandler
-            projectPager?.refreshProjectList()
+
+            if(lList != null && lList.size != 0) {
+                projectPager?.refreshProjectList()
+                lBinding.todoListPager.visibility=View.VISIBLE
+            } else {
+                lBinding.todoListPager.visibility=View.GONE
+            }
         }
     }
 
