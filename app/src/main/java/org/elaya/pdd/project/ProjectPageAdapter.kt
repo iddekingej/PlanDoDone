@@ -34,7 +34,7 @@ class ProjectPageAdapter(pFragment:Fragment): FragmentStateAdapter(pFragment) {
             val lProjects=projects;
             if(lProjects != null) {
                 if (pPosition - 1 < lProjects.size) {
-                    return TodoListPagerFragment.start(lProjects[pPosition - 1].id);
+                    return TodoListPagerFragment.start(lProjects[pPosition - 1].id,pPosition==lProjects.size);
                 }
             }
         }

@@ -16,6 +16,9 @@
     <string name="todo_description_desc">Longer description of the todo</string>
     <string name="todo_project_name">Project name</string>
     <string name="todo_status">Status</string>
+    <string name="project_next">Goto next project</string>
+    <string name="project_previous">Goto previous project</string>
+    <string name="project_add_todo">Add todo</string>
     <string-array name="todo_status_modes">
         <item>New</item>
         <item>Started</item>

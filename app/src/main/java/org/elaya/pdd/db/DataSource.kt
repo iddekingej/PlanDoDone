@@ -45,6 +45,15 @@ class DataSource(pContext:Context) {
         return null
         }
 
+    private fun fetchSingleFieldInt(pQuery:String):Int?{
+        val lIt=db.rawQuery(pQuery,null);
+        if(lIt.moveToNext()){
+            return lIt.getInt(0);
+        }
+        lIt.close();
+        return null;
+    }
+
     private inline fun <T>fetchRows(pQuery:String,pArgs:Array<String> ,pBody:(it:Cursor)->T):LinkedList<T>{
         var it:Cursor?=null
         val lList=LinkedList<T>()
@@ -98,10 +107,14 @@ class DataSource(pContext:Context) {
     }
 
 
-    fun hasTodo():Boolean
-    {
-        return hasResult("select 1 as dm from "+Todo.TABLE_NAME,null);
+    fun getFirstProjectId():Int?{
+        return fetchSingleFieldInt("select min("+Project.F_ID+") as id from "+Project.TABLE_NAME);
     }
+
+    fun getLastProjectId():Int?{
+        return fetchSingleFieldInt("select "+Project.F_ID+" from "+Project.TABLE_NAME+"  order by "+Project.F_NAME+" desc limit 1");
+    }
+
 
     fun addTodo(pProjectId:Int,pStatus:Int,pTitle:String, pDescription:String){
         val lValues=ContentValues()

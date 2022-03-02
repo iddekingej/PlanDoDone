@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.annotation.NonNull
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.setFragmentResultListener
 import androidx.viewpager2.widget.ViewPager2
 import org.elaya.pdd.R
 import org.elaya.pdd.databinding.FragmentProcesListBinding
@@ -28,9 +30,18 @@ import org.elaya.pdd.tools.fragments.FragmentBase
 class ProjectListFragment : FragmentBase() {
     private var binding:FragmentProcesListBinding?=null
     private var projectHandler:ProjectListViewHandler?=null
-    private var todoListHandler: TodoList?=null
+
     private var projectPager:ProjectPageAdapter?=null;
     private var currentSelectedProject:Int=-1;
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        childFragmentManager.setFragmentResultListener(KEY_TODO_LIST_NAVIGATION,this) {
+                _, pBundle-> todoListNavigation(pBundle)
+        }
+
+    }
+
     override fun onCreateView(
         pInflater: LayoutInflater, pContainer: ViewGroup?,
         pSavedInstanceState: Bundle?
@@ -85,6 +96,16 @@ class ProjectListFragment : FragmentBase() {
 
     }
 
+    private fun todoListNavigation(@NonNull pBundle:Bundle){
+        val lDirection=pBundle.getInt(PAR_DIRECTION);
+        val lBinding=binding;
+        if(lBinding != null){
+            lBinding.todoListPager.currentItem += lDirection;
+        }
+
+
+    }
+
     private fun clickItem(pProject:Project)
     {
         val lActivity=activity
@@ -123,7 +144,7 @@ class ProjectListFragment : FragmentBase() {
                 lBinding.projectList.visibility = View.VISIBLE
             }
 
-            if(lList != null && lList.size != 0) {
+            if( lList.size != 0) {
                 projectPager?.refreshProjectList()
                 lBinding.todoListPager.visibility=View.VISIBLE
             } else {
@@ -141,7 +162,14 @@ class ProjectListFragment : FragmentBase() {
            setupProjectList()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding=null;
+    }
+
     companion object {
+        const val KEY_TODO_LIST_NAVIGATION="todo_list_navigation"
+        const val PAR_DIRECTION="direction"
         @JvmStatic
         fun newInstance() = ProjectListFragment()
     }
