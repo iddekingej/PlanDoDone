@@ -31,8 +31,8 @@ class ProjectListFragment : FragmentBase() {
     private var binding:FragmentProcesListBinding?=null
     private var projectHandler:ProjectListViewHandler?=null
 
-    private var projectPager:ProjectPageAdapter?=null;
-    private var currentSelectedProject:Int=-1;
+    private var projectPager:ProjectPageAdapter?=null
+    private var currentSelectedProject:Int=-1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,36 +71,36 @@ class ProjectListFragment : FragmentBase() {
 
     private fun setProjectColor(pIndex:Int,pSelected:Boolean)
     {
-        val lBinding=binding;
+        val lBinding=binding
         if(lBinding != null) {
-            val lView = lBinding.projectList.getChildAt(pIndex) as LinearLayout;
+            val lView = lBinding.projectList.getChildAt(pIndex) as LinearLayout
             lView.setBackgroundColor(if(pSelected){ getColor(R.color.color_selected)} else {Color.TRANSPARENT})
-            val lTextView = lView.getChildAt(0) as TextView;
-            lTextView.setTextColor(getColor(if(pSelected){R.color.color_text_selected} else {R.color.color_text_not_selected}));
+            val lTextView = lView.getChildAt(0) as TextView
+            lTextView.setTextColor(getColor(if(pSelected){R.color.color_text_selected} else {R.color.color_text_not_selected}))
         }
     }
 
     private fun todoListPageSelected(pPosition:Int)
     {
-        val lBinding=binding;
+        val lBinding=binding
         if(lBinding != null) {
             if (currentSelectedProject >=0 && currentSelectedProject<lBinding.projectList.childCount) {
                 setProjectColor(currentSelectedProject,false)
             }
-            val lSelected=pPosition-1;
+            val lSelected=pPosition-1
             if(lSelected>=0 && lSelected<=lBinding.projectList.childCount){
                 setProjectColor(lSelected,true)
             }
-            currentSelectedProject=lSelected;
+            currentSelectedProject=lSelected
         }
 
     }
 
     private fun todoListNavigation(@NonNull pBundle:Bundle){
-        val lDirection=pBundle.getInt(PAR_DIRECTION);
-        val lBinding=binding;
+        val lDirection=pBundle.getInt(PAR_DIRECTION)
+        val lBinding=binding
         if(lBinding != null){
-            lBinding.todoListPager.currentItem += lDirection;
+            lBinding.todoListPager.currentItem += lDirection
         }
 
 
@@ -164,7 +164,7 @@ class ProjectListFragment : FragmentBase() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding=null;
+        binding=null
     }
 
     companion object {

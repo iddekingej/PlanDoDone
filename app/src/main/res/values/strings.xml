@@ -10,7 +10,7 @@
     <string name="project_active_todo">Active todos</string>
     <string name="todo_edit_project">Edit project</string>
     <string name="todo_add_todo">Add todo</string>
-    <string name="todo_title">Title</string>
+    <string name="todo_title">Todo description</string>
     <string name="todo_title_desc">Title of the todo</string>
     <string name="todo_description">Description</string>
     <string name="todo_description_desc">Longer description of the todo</string>

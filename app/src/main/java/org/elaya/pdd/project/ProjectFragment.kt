@@ -106,7 +106,7 @@ class ProjectFragment:FragmentBase() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding=null;
+        binding=null
     }
 
     private fun makeTodoList()

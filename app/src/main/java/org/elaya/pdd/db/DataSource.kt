@@ -46,12 +46,12 @@ class DataSource(pContext:Context) {
         }
 
     private fun fetchSingleFieldInt(pQuery:String):Int?{
-        val lIt=db.rawQuery(pQuery,null);
+        val lIt=db.rawQuery(pQuery,null)
         if(lIt.moveToNext()){
-            return lIt.getInt(0);
+            return lIt.getInt(0)
         }
-        lIt.close();
-        return null;
+        lIt.close()
+        return null
     }
 
     private inline fun <T>fetchRows(pQuery:String,pArgs:Array<String> ,pBody:(it:Cursor)->T):LinkedList<T>{
@@ -108,11 +108,11 @@ class DataSource(pContext:Context) {
 
 
     fun getFirstProjectId():Int?{
-        return fetchSingleFieldInt("select min("+Project.F_ID+") as id from "+Project.TABLE_NAME);
+        return fetchSingleFieldInt("select min("+Project.F_ID+") as id from "+Project.TABLE_NAME)
     }
 
     fun getLastProjectId():Int?{
-        return fetchSingleFieldInt("select "+Project.F_ID+" from "+Project.TABLE_NAME+"  order by "+Project.F_NAME+" desc limit 1");
+        return fetchSingleFieldInt("select "+Project.F_ID+" from "+Project.TABLE_NAME+"  order by "+Project.F_NAME+" desc limit 1")
     }
 
 

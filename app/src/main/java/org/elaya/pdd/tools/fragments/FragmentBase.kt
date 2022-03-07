@@ -64,7 +64,7 @@ open class FragmentBase : Fragment(),FragmentResultListener {
         if(lContext != null){
             return lContext.getColor(pColor)
         }
-        return Color.TRANSPARENT;
+        return Color.TRANSPARENT
     }
 
     fun showKeyboard()
