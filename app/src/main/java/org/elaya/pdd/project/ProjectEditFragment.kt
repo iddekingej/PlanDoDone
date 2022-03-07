@@ -2,6 +2,8 @@ package org.elaya.pdd.project
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,12 +74,28 @@ class ProjectEditFragment: DialogFragmentBase() {
             lBinding.isActive.isChecked=true
             projectId=-1
             lBinding.remove.visibility=View.GONE
+            lBinding.save.isEnabled=false;
         } else {
-            lBinding.projectNameEdit.setText(lArguments.getString(P_NAME,""))
+            val lName=lArguments.getString(P_NAME,"");
+            lBinding.projectNameEdit.setText(lName)
             lBinding.isActive.isChecked=lArguments.getBoolean(P_IS_ACTIVE)
             projectId=lArguments.getInt(P_ID,-1)
             lBinding.remove.visibility=if(Globals.db?.projectHasTodo(projectId)==true){ View.GONE} else {View.VISIBLE}
+            lBinding.save.isEnabled=lName.isNotEmpty()
         }
+        lBinding.projectNameEdit.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(pText: Editable?) {
+                lBinding.save.isEnabled=pText !=null && pText.isNotEmpty()
+            }
+
+        })
 
         return lBinding.root
     }
