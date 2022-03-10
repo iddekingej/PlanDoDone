@@ -14,6 +14,18 @@ class ProjectPageAdapter(pFragment:Fragment): FragmentStateAdapter(pFragment) {
         projects= Globals.db?.getProjects()
     }
 
+    fun getPosFromProject(pProject:Project):Int{
+        val lProjects=projects;
+        if(lProjects != null) {
+            for (lCnt in 0..lProjects.size) {
+                if(lProjects[lCnt].id==pProject.id){
+                    return lCnt;
+                }
+            }
+        }
+        return -1;
+    }
+
     override fun getItemCount(): Int {
         val lProjects=projects
         if(lProjects != null){

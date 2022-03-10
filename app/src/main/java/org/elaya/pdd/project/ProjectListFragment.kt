@@ -7,18 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.annotation.NonNull
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.setFragmentResultListener
 import androidx.viewpager2.widget.ViewPager2
 import org.elaya.pdd.R
 import org.elaya.pdd.databinding.FragmentProcesListBinding
 import org.elaya.pdd.settings.Globals
-import org.elaya.pdd.todo.ToDoEditFragment
-import org.elaya.pdd.todo.Todo
-import org.elaya.pdd.todo.TodoList
 import org.elaya.pdd.tools.fragments.FragmentBase
 
 
@@ -31,7 +24,7 @@ class ProjectListFragment : FragmentBase() {
     private var binding:FragmentProcesListBinding?=null
     private var projectHandler:ProjectListViewHandler?=null
 
-    private var projectPager:ProjectPageAdapter?=null
+    private var projectPagerAdapter:ProjectPageAdapter?=null
     private var currentSelectedProject:Int=-1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +49,7 @@ class ProjectListFragment : FragmentBase() {
         }
         lBinding.projectAdd.setOnClickListener(this::newProject)
         val lProjectPageAdapter=ProjectPageAdapter(this)
-        projectPager=lProjectPageAdapter
+        projectPagerAdapter=lProjectPageAdapter
         lBinding.todoListPager.adapter=lProjectPageAdapter
         lBinding.todoListPager.registerOnPageChangeCallback(
             object: ViewPager2.OnPageChangeCallback() {
@@ -66,6 +59,7 @@ class ProjectListFragment : FragmentBase() {
                 }
             }
         )
+
         return lBinding.root
     }
 
@@ -108,13 +102,16 @@ class ProjectListFragment : FragmentBase() {
 
     private fun clickItem(pProject:Project)
     {
-        val lActivity=activity
-        if(lActivity !=null) {
-            startFragment("project"){
-                ProjectFragment.start(pProject.id)
+        val lProjectPageAdapter=projectPagerAdapter;
+        if(lProjectPageAdapter !=null) {
+            val lNo = lProjectPageAdapter.getPosFromProject(pProject);
+            if (lNo >= 0) {
+                val lBinding = binding;
+                if (lBinding != null) {
+                    lBinding.todoListPager.currentItem = lNo+1;
+                }
             }
         }
-
     }
 
     private fun newProject(pView:View){
@@ -145,7 +142,7 @@ class ProjectListFragment : FragmentBase() {
             }
 
             if( lList.size != 0) {
-                projectPager?.refreshProjectList()
+                projectPagerAdapter?.refreshProjectList()
                 lBinding.todoListPager.visibility=View.VISIBLE
             } else {
                 lBinding.todoListPager.visibility=View.GONE

@@ -1,6 +1,9 @@
 package org.elaya.pdd.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import org.elaya.pdd.R
 import org.elaya.pdd.databinding.ActivityMainBinding
 import org.elaya.pdd.project.ProjectListFragment
@@ -15,9 +18,11 @@ class MainActivity : BaseActivity() {
         lTransaction.replace(R.id.mainContent,ProjectListFragment.newInstance(), "projectEdit")
             .commitAllowingStateLoss()
         setContentView(lBinding.root)
+
     }
 
-    override fun onBackPressed() {
+
+        override fun onBackPressed() {
         if(supportFragmentManager.fragments.size>0) {
             supportFragmentManager.popBackStack()
         } else {

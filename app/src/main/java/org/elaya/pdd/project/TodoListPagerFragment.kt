@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import org.elaya.pdd.R
 import org.elaya.pdd.databinding.FragmentTodolistBinding
 import org.elaya.pdd.settings.Globals
@@ -67,7 +65,7 @@ class TodoListPagerFragment:FragmentBase() {
         pInflater: LayoutInflater,
         pContainer: ViewGroup?,
         pSavedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(pInflater, pContainer, pSavedInstanceState)
         val lDb=Globals.db
         var lTodoList: LinkedList<Todo>?=null
@@ -127,12 +125,11 @@ class TodoListPagerFragment:FragmentBase() {
 
     private fun addTodo()
     {
-        val lProject=project
-        if(lProject != null) {
-            startFragment("editTodo") {
 
-                ToDoEditFragment.newInstance(lProject)
-            }
+        startFragment("editTodo") {
+
+            ToDoEditFragment.newInstance(project)
         }
+
     }
 }

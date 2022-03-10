@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.widget.AdapterView
 import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
 import org.elaya.pdd.R
@@ -29,8 +30,10 @@ class ToDoEditFragment : FragmentBase() {
             project = if (lTodo != null) {
                 val lProjectId = lTodo.projectId
                 Globals.db?.getProject(lProjectId)
-            } else {
+            } else if(lArguments.containsKey(P_PROJECT)) {
                 lArguments.get(P_PROJECT) as Project?
+            } else {
+                null
             }
         }
     }
@@ -70,6 +73,18 @@ class ToDoEditFragment : FragmentBase() {
         return -1
     }
 
+    private fun checkSaveEnable()
+    {
+        var lBinding=binding;
+        if(lBinding != null) {
+            var lSelected=lBinding.projectSelection.selectedItem;
+            var lProjectSelected=false;
+            if(lSelected is Project){
+                lProjectSelected=lSelected.id != -1;
+            }
+            lBinding.saveButton.isEnabled = lBinding.titleInput.text.isNotEmpty() && lProjectSelected;
+        }
+    }
 
     override fun onCreateView(
         pInflater: LayoutInflater,
@@ -92,10 +107,14 @@ class ToDoEditFragment : FragmentBase() {
         }
         val lDb = Globals.db
         val lContext = context
-        if (lDb != null && lContext != null && lProject != null) {
+        if (lDb != null && lContext != null ) {
             val lProjects = lDb.getProjects()
-
-
+            var lProjectId=-1;
+            if(lProject == null) {
+                lProjects.addFirst(Project(-1, "", true));
+            } else {
+                lProjectId=lProject.id;
+            }
             projectAdapter = ArraySpinnerAdapter(
                 lContext,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -103,7 +122,19 @@ class ToDoEditFragment : FragmentBase() {
             )
 
             lBinding.projectSelection.adapter = projectAdapter
-            lBinding.projectSelection.setSelection(getIndexOf(lProjects, lProject.id))
+
+            lBinding.projectSelection.setSelection(getIndexOf(lProjects, lProjectId))
+            lBinding.projectSelection.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    checkSaveEnable()
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    checkSaveEnable()
+                }
+
+            }
+
         }
         lBinding.titleInput.requestFocus()
         lBinding.titleInput.addTextChangedListener(object : TextWatcher {
@@ -115,7 +146,8 @@ class ToDoEditFragment : FragmentBase() {
             }
 
             override fun afterTextChanged(pText: Editable?) {
-                lBinding.saveButton.isEnabled = pText != null && pText.isNotEmpty()
+                checkSaveEnable()
+
             }
 
         })
@@ -175,10 +207,12 @@ class ToDoEditFragment : FragmentBase() {
         private const val P_PROJECT = "project"
         private const val P_TODO = "todo"
 
-        fun newInstance(pProject: Project): Fragment {
+        fun newInstance(pProject: Project?): Fragment {
             val lFragment = ToDoEditFragment()
             val lArguments = Bundle()
-            lArguments.putParcelable(P_PROJECT, pProject)
+            if(pProject != null) {
+                lArguments.putParcelable(P_PROJECT, pProject)
+            }
             lFragment.arguments = lArguments
             return lFragment
         }
