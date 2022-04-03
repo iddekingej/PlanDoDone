@@ -1,6 +1,7 @@
 package org.elaya.pdd.project
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,12 +53,35 @@ class TodoListPagerFragment:FragmentBase() {
 
     override fun onResume() {
         super.onResume()
-
+        Log.d("TODO", "onResume $projectId");
         val lLast=Globals.db?.getLastProjectId()
         val lBinding=binding
         if(lBinding != null){
             lBinding.previousTodo.visibility=if(projectId>-1){ View.VISIBLE} else {View.GONE}
             lBinding.nextTodo.visibility=if(lLast != null && projectId!=lLast){ View.VISIBLE} else {View.GONE}
+            refreshData()
+            val lParent=lBinding.root.parent
+            if(lParent != null) {
+                Log.d("TODO","On Resume view="+lParent.javaClass.name+":"+(lParent as View).id)
+            }
+        }
+
+    }
+
+    fun refreshData()
+    {
+        val lBinding=binding
+        if(lBinding != null) {
+            if (projectId == -1) {
+
+                lBinding.title.setText(R.string.project_active_todo)
+
+            } else {
+                val lProject = Globals.db?.getProject(projectId)
+                if (lProject != null) {
+                    lBinding.title.text = lProject.name
+                }
+            }
         }
     }
 
@@ -67,6 +91,8 @@ class TodoListPagerFragment:FragmentBase() {
         pSavedInstanceState: Bundle?
     ): View {
         super.onCreateView(pInflater, pContainer, pSavedInstanceState)
+        Log.d("TODO", "onCreateView $projectId");
+
         val lDb=Globals.db
         var lTodoList: LinkedList<Todo>?=null
         val lBinding=FragmentTodolistBinding.inflate(pInflater,pContainer,false)
@@ -87,6 +113,11 @@ class TodoListPagerFragment:FragmentBase() {
                 }
             }
 
+            lBinding.goFirst.setOnClickListener{
+                val lBundle=Bundle();
+                lBundle.putInt(ProjectListFragment.PAR_PAGE,0)
+                setFragmentResult(ProjectListFragment.KEY_TODO_LIST_NAVIGATION,lBundle)
+            }
             lBinding.nextTodo.setOnClickListener {
                 val lBundle=Bundle()
                 lBundle.putInt(ProjectListFragment.PAR_DIRECTION,1)

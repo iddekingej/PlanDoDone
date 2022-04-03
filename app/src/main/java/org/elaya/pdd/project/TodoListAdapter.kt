@@ -1,18 +1,34 @@
 package org.elaya.pdd.project
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import org.elaya.pdd.settings.Globals
 import java.util.*
 
 
-class ProjectPageAdapter(pFragment:Fragment): FragmentStateAdapter(pFragment) {
+class TodoListAdapter(pFragment:Fragment): FragmentStateAdapter(pFragment) {
     private var projects:LinkedList<Project>?=null
 
     init {
         projects= Globals.db?.getProjects()
     }
+
+    override fun getItemId(pPosition: Int): Long {
+        return pPosition.toLong();
+    }
+    fun getProjectByPos(pPos:Int):Project?{
+        val lProjects=projects;
+        if(lProjects != null){
+            if(pPos>=0 && pPos< lProjects.size) {
+                return lProjects[pPos];
+            }
+        }
+        return null;
+    }
+
+
 
     fun getPosFromProject(pProject:Project):Int{
         val lProjects=projects;
@@ -26,6 +42,8 @@ class ProjectPageAdapter(pFragment:Fragment): FragmentStateAdapter(pFragment) {
         return -1;
     }
 
+
+
     override fun getItemCount(): Int {
         val lProjects=projects
         if(lProjects != null){
@@ -37,6 +55,7 @@ class ProjectPageAdapter(pFragment:Fragment): FragmentStateAdapter(pFragment) {
     @SuppressLint("NotifyDataSetChanged")
     fun refreshProjectList()
     {
+        Log.d("TODO","Refresh adapter");
         projects= Globals.db?.getProjects()
         notifyDataSetChanged()
     }

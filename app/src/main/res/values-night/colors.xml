@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+    <color name="controlFront">#0000FF</color>
+
+    <color name="gen_text_color">#FFFFFF</color>
+    <color name="button_border">#0000FF</color>
+    <color name="button_border_disabled">#dddddd</color>
+    <color name="button_bg">#000</color>
+</resources>

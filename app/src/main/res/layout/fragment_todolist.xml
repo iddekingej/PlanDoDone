@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+<TextView
+
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/title"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="@id/topBarrier"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toStartOf="@id/goFirst"
+    app:layout_constraintHeight_min="24dp"
+    android:autoSizeTextType="uniform"
+
+    style="@style/title"
+    />
+    <ImageButton
+        android:id="@+id/goFirst"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:src="@drawable/first_page"
+        app:layout_constraintStart_toEndOf="@+id/title"
+        app:layout_constraintEnd_toStartOf="@+id/previousTodo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/project_first_todo"
+        app:layout_constraintHorizontal_weight="0"
+        />
+    <ImageButton
+        android:id="@+id/previousTodo"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toEndOf="@+id/goFirst"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/addTodo"
+        android:contentDescription="@string/project_next"
+        app:layout_constraintHorizontal_weight="0"
+        />
+
+
+    <ImageButton
+        android:id="@+id/addTodo"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:src="@drawable/add"
+        app:layout_constraintStart_toEndOf="@+id/previousTodo"
+        app:layout_constraintEnd_toStartOf="@+id/nextTodo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/project_add_todo"
+        app:layout_constraintHorizontal_weight="0"
+        />
+
+    <ImageButton
+        android:id="@+id/nextTodo"
+        android:layout_margin="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:src="@drawable/next"
+        app:layout_constraintStart_toEndOf="@id/addTodo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/project_previous"
+        app:layout_constraintHorizontal_weight="0"
+        />
+<androidx.constraintlayout.widget.Barrier
+    android:id="@+id/topBarrier"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:barrierDirection="bottom"
+    app:constraint_referenced_ids="nextTodo,previousTodo,title"
+    />
+    <ScrollView
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:fillViewport="true"
+    app:layout_constraintTop_toBottomOf="@+id/title"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="10dp"
+    >
+    <TableLayout
+        android:id="@+id/todoList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?attr/listStyle"
+        />
+
+</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

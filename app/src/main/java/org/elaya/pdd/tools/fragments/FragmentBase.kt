@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.MenuRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
@@ -62,7 +63,7 @@ open class FragmentBase : Fragment(),FragmentResultListener {
     {
         val lContext=context
         if(lContext != null){
-            return lContext.getColor(pColor)
+            return  ContextCompat.getColor(lContext,pColor)
         }
         return Color.TRANSPARENT
     }
@@ -98,18 +99,17 @@ open class FragmentBase : Fragment(),FragmentResultListener {
 
     }
 
-    protected inline fun startDialogFragment(pTag:String?, pMakeFragment:()->Fragment) {
+    protected inline fun startDialogFragment(pTag:String?,pKey:String, pMakeFragment:()->Fragment) {
         val lActivity=activity
         if(lActivity != null) {
             val lTransaction = lActivity.supportFragmentManager.beginTransaction()
             val lFragment=pMakeFragment()
             var lArgs=lFragment.arguments
-            val lKey=getFragmentKey()
             if(lArgs==null){
                 lArgs=Bundle()
                 lFragment.arguments=lArgs
             }
-            lArgs.putString(P_KEY,lKey)
+            lArgs.putString(P_KEY,pKey)
             lTransaction.add(lFragment, pTag).commitAllowingStateLoss()
         }
     }

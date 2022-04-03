@@ -1,9 +1,6 @@
 package org.elaya.pdd.main
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import org.elaya.pdd.R
 import org.elaya.pdd.databinding.ActivityMainBinding
 import org.elaya.pdd.project.ProjectListFragment

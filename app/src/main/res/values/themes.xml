@@ -5,15 +5,12 @@
         <item name="colorPrimary">@color/controlFront</item>
         <item name="colorPrimaryVariant">@color/controlFront</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:textViewStyle">@style/baseTextView</item>
-
+        <item name="listStyle">@style/listViewStyle</item>
     </style>
 
     <style name="title" parent="baseTextView">
@@ -22,7 +19,7 @@
         <item name="android:textAlignment">center</item>
     </style>
     <style name="baseTextView" parent="android:Widget.DeviceDefault.TextView">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColor">@color/gen_text_color</item>
     </style>
 
     <style name="projectNameTitle" parent="baseTextView">
@@ -33,5 +30,24 @@
     <style name="formLabel" parent="baseTextView">
         <item name='android:textStyle'>bold</item>
 
+    </style>
+
+
+    <style name="buttonStyle" parent="android:Widget.Material.Button">
+        <item name="android:backgroundTint">@drawable/button_background</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginStart">3dp</item>
+        <item name="android:layout_marginEnd">3dp</item>
+        <item name="android:padding">3dp</item>
+    </style>
+
+    <style name="listViewItemStyle" parent="baseTextView">
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <style name="listViewStyle">
+        <item name="android:background">@color/list_background</item>
+        <item name="android:padding">4dp</item>
     </style>
 </resources>

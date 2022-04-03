@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="AppTheme">
+        <attr name="listStyle" format="reference"/>
+    </declare-styleable>
+</resources>

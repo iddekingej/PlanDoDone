@@ -5,10 +5,12 @@
     <string name="label_gen_delete">Delete</string>
     <string name="label_gen_back">Back</string>
     <string name="project_add">Add Project</string>
+    <string name="project_title">Projects</string>
     <string name="project_add_help">Please first add a project and than todo items.</string>
     <string name="project_edit_name">Project name</string>
     <string name="project_edit_active">Project active?</string>
     <string name="project_active_todo">All todo\'s</string>
+    <string name="project_first_todo">First todo</string>
     <string name="todo_edit_project">Edit project</string>
     <string name="todo_add_todo">Add todo</string>
     <string name="todo_title">Todo description</string>
