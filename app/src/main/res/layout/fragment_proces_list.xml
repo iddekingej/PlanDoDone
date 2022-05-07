@@ -30,6 +30,7 @@
         app:layout_constraintHeight_min="24dp"
         android:autoSizeTextType="uniform"
 
+
         style="@style/title"
         />
     <ImageButton
