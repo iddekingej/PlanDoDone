@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Plan Do Done</string>
+    <string name="label_gen_yes">Yes</string>
+    <string name="label_gen_no">No</string>
     <string name="label_gen_save">Save</string>
     <string name="label_gen_cancel">Cancel</string>
     <string name="label_gen_delete">Delete</string>
@@ -19,6 +21,8 @@
     <string name="todo_description_desc">Longer description of the todo</string>
     <string name="todo_project_name">Project name</string>
     <string name="todo_status">Status</string>
+    <string name="todo_delete_conform">Delete this todo?</string>
+    <string name="todo_delete_conform_title">Confirm deletion of this todo</string>
     <string name="project_next">Goto next project</string>
     <string name="project_previous">Goto previous project</string>
     <string name="project_add_todo">Add todo</string>

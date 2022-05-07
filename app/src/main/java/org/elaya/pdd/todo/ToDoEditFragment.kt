@@ -1,5 +1,6 @@
 package org.elaya.pdd.todo
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +14,7 @@ import org.elaya.pdd.project.Project
 import org.elaya.pdd.settings.Globals
 import org.elaya.pdd.tools.data.ArraySpinnerAdapter
 import org.elaya.pdd.tools.fragments.FragmentBase
+import org.elaya.pdd.tools.views.AlertTool
 
 class ToDoEditFragment : FragmentBase() {
     private var binding: FragmentTodoEditBinding? = null
@@ -45,18 +47,27 @@ class ToDoEditFragment : FragmentBase() {
 
     }
 
+    private fun deleteTodo()
+    {
+        AlertTool.confirm(this,R.string.todo_delete_conform_title,R.string.todo_delete_conform
+        ) { _, _ ->
+            val lDb = Globals.db
+            val lTodo = todo
+            if (lTodo != null && lDb != null) {
+                lDb.deleteTodo(lTodo.id)
+            }
+            goBack()
+        };
+    }
 
     override fun onOptionsItemSelected(pItem: MenuItem): Boolean {
 
         if (pItem.itemId == R.id.delete) {
             if (todo != null) {
-                val lDb = Globals.db
-                val lTodo = todo
-                if (lTodo != null && lDb != null) {
-                    lDb.deleteTodo(lTodo.id)
-                }
+                deleteTodo()
+                return true;
             }
-            goBack()
+
         }
         return super.onOptionsItemSelected(pItem)
 
