@@ -63,11 +63,8 @@ class ToDoEditFragment : FragmentBase() {
     override fun onOptionsItemSelected(pItem: MenuItem): Boolean {
 
         if (pItem.itemId == R.id.delete) {
-            if (todo != null) {
-                deleteTodo()
-                return true;
-            }
-
+            deleteTodo()
+            return true;
         }
         return super.onOptionsItemSelected(pItem)
 

@@ -16,7 +16,11 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toStartOf="@id/goFirst"
     app:layout_constraintHeight_min="24dp"
-    android:autoSizeTextType="uniform"
+    app:autoSizeTextType="uniform"
+    app:autoSizeMinTextSize="16sp"
+    android:ellipsize="end"
+    android:lines="1"
+    android:maxLines="1"
 
     style="@style/title"
     />
