@@ -1,6 +1,5 @@
 package org.elaya.pdd.todo
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -31,7 +30,7 @@ class ToDoEditFragment : FragmentBase() {
             val lTodo = todo
             project = if (lTodo != null) {
                 val lProjectId = lTodo.projectId
-                Globals.db?.getProject(lProjectId)
+                getDB()?.getProject(lProjectId)
             } else if(lArguments.containsKey(P_PROJECT)) {
                 lArguments.get(P_PROJECT) as Project?
             } else {
@@ -51,20 +50,20 @@ class ToDoEditFragment : FragmentBase() {
     {
         AlertTool.confirm(this,R.string.todo_delete_conform_title,R.string.todo_delete_conform
         ) { _, _ ->
-            val lDb = Globals.db
+            val lDb = getDB()
             val lTodo = todo
             if (lTodo != null && lDb != null) {
                 lDb.deleteTodo(lTodo.id)
             }
             goBack()
-        };
+        }
     }
 
     override fun onOptionsItemSelected(pItem: MenuItem): Boolean {
 
         if (pItem.itemId == R.id.delete) {
             deleteTodo()
-            return true;
+            return true
         }
         return super.onOptionsItemSelected(pItem)
 
@@ -83,14 +82,14 @@ class ToDoEditFragment : FragmentBase() {
 
     private fun checkSaveEnable()
     {
-        var lBinding=binding;
+        val lBinding=binding
         if(lBinding != null) {
-            var lSelected=lBinding.projectSelection.selectedItem;
-            var lProjectSelected=false;
+            val lSelected=lBinding.projectSelection.selectedItem
+            var lProjectSelected=false
             if(lSelected is Project){
-                lProjectSelected=lSelected.id != -1;
+                lProjectSelected=lSelected.id != -1
             }
-            lBinding.saveButton.isEnabled = lBinding.titleInput.text.isNotEmpty() && lProjectSelected;
+            lBinding.saveButton.isEnabled = lBinding.titleInput.text.isNotEmpty() && lProjectSelected
         }
     }
 
@@ -113,15 +112,15 @@ class ToDoEditFragment : FragmentBase() {
         } else {
             lBinding.saveButton.isEnabled = false
         }
-        val lDb = Globals.db
+        val lDb = getDB()
         val lContext = context
         if (lDb != null && lContext != null ) {
             val lProjects = lDb.getProjects()
-            var lProjectId=-1;
+            var lProjectId=-1
             if(lProject == null) {
-                lProjects.addFirst(Project(-1, "", true));
+                lProjects.addFirst(Project(-1, "", true))
             } else {
-                lProjectId=lProject.id;
+                lProjectId=lProject.id
             }
             projectAdapter = ArraySpinnerAdapter(
                 lContext,
@@ -190,7 +189,7 @@ class ToDoEditFragment : FragmentBase() {
 
     private fun saveTodo(pView: View) {
         val lBinding = binding
-        val lDs = Globals.db
+        val lDs = getDB()
         if (lBinding != null && lDs != null) {
             val lTodo = todo
             val lTitle = lBinding.titleInput.text.toString()

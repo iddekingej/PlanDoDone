@@ -6,6 +6,5 @@ import org.elaya.pdd.settings.Globals
 class PDDApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-        Globals.applicationSetup(this)
     }
 }

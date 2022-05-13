@@ -1,6 +1,7 @@
 package org.elaya.pdd.project
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -8,38 +9,44 @@ import org.elaya.pdd.settings.Globals
 import java.util.*
 
 
-class TodoListAdapter(pFragment:Fragment): FragmentStateAdapter(pFragment) {
+class TodoListAdapter(pFragment: Fragment) : FragmentStateAdapter(pFragment) {
     private var projects:LinkedList<Project>?=null
+    private var context:Context?=null
 
     init {
-        projects= Globals.db?.getProjects()
+        var lContext=pFragment.context
+        if(lContext != null){
+            context=lContext;
+            projects=Globals.getDB(lContext).getProjects();
+        }
     }
 
     override fun getItemId(pPosition: Int): Long {
-        return pPosition.toLong();
+        return pPosition.toLong()
     }
     fun getProjectByPos(pPos:Int):Project?{
-        val lProjects=projects;
+        val lProjects=projects
         if(lProjects != null){
             if(pPos>=0 && pPos< lProjects.size) {
-                return lProjects[pPos];
+                return lProjects[pPos]
             }
         }
-        return null;
+
+        return null
     }
 
 
 
     fun getPosFromProject(pProject:Project):Int{
-        val lProjects=projects;
+        val lProjects=projects
         if(lProjects != null) {
             for (lCnt in 0..lProjects.size) {
                 if(lProjects[lCnt].id==pProject.id){
-                    return lCnt;
+                    return lCnt
                 }
             }
         }
-        return -1;
+        return -1
     }
 
 
@@ -55,8 +62,11 @@ class TodoListAdapter(pFragment:Fragment): FragmentStateAdapter(pFragment) {
     @SuppressLint("NotifyDataSetChanged")
     fun refreshProjectList()
     {
-        Log.d("TODO","Refresh adapter");
-        projects= Globals.db?.getProjects()
+        Log.d("TODO","Refresh adapter")
+        var lContext=context;
+        if(lContext != null) {
+            projects = Globals.getDB(lContext).getProjects()
+        }
         notifyDataSetChanged()
     }
 

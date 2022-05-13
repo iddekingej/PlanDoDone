@@ -5,10 +5,19 @@ import org.elaya.pdd.db.DataSource
 
 object Globals {
     private var vDb:DataSource?=null
-    val db: DataSource?
-    get()=vDb
 
-    fun applicationSetup(pContext:Context){
-        vDb=DataSource(pContext)
+    @Synchronized
+     fun getDB(pContext:Context):DataSource{
+        val lDb:DataSource?=vDb;
+        lateinit var lReturn:DataSource;
+        if(lDb != null){
+            lReturn=lDb
+        } else {
+            lReturn=DataSource(pContext);
+            vDb=lReturn
+        }
+
+        return lReturn;
     }
+
 }

@@ -24,15 +24,40 @@
         android:layout_width="0dp"
         android:text="@string/project_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/projectAdd"
+        app:layout_constraintEnd_toStartOf="@+id/goFirst"
         app:layout_constraintTop_toBottomOf="@id/todoListPager"
         app:layout_constraintBottom_toTopOf="@id/projectList"
         app:layout_constraintHeight_min="24dp"
-        android:autoSizeTextType="uniform"
-
-
+        app:autoSizeTextType="uniform"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_weight="0"
         style="@style/title"
         />
+
+    <ImageButton
+        android:id="@+id/goFirst"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:src="@drawable/first_page"
+        app:layout_constraintStart_toEndOf="@+id/projectTitle"
+        app:layout_constraintEnd_toStartOf="@+id/previousTodo"
+        app:layout_constraintBottom_toTopOf="@id/projectList"
+        android:contentDescription="@string/project_first_todo"
+        app:layout_constraintHorizontal_weight="0"
+        />
+    <ImageButton
+        android:id="@+id/previousTodo"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toEndOf="@+id/goFirst"
+        app:layout_constraintBottom_toTopOf="@id/projectList"
+        app:layout_constraintEnd_toStartOf="@+id/projectAdd"
+        android:contentDescription="@string/project_next"
+        app:layout_constraintHorizontal_weight="0"
+        />
+
+
     <ImageButton
         android:id="@+id/projectAdd"
         android:layout_margin="0dp"
@@ -41,12 +66,13 @@
         android:layout_height="36dp"
         android:src="@drawable/add"
         app:layout_constraintTop_toBottomOf="@id/todoListPager"
-        app:layout_constraintStart_toEndOf="@id/projectTitle"
+        app:layout_constraintStart_toEndOf="@id/previousTodo"
         app:layout_constraintEnd_toEndOf="@+id/projectEdit"
         app:layout_constraintBottom_toTopOf="@id/projectList"
         android:contentDescription="@string/project_add"
         app:layout_constraintHorizontal_weight="0"
         />
+
 
     <ImageButton
         android:id="@+id/projectEdit"
@@ -57,11 +83,23 @@
         android:src="@drawable/edit"
         app:layout_constraintTop_toBottomOf="@id/todoListPager"
         app:layout_constraintStart_toEndOf="@id/projectAdd"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextTodo"
         app:layout_constraintBottom_toTopOf="@id/projectList"
         android:contentDescription="@string/project_add"
         app:layout_constraintHorizontal_weight="0"
 
+        />
+    <ImageButton
+        android:id="@+id/nextTodo"
+        android:layout_margin="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:src="@drawable/next"
+        app:layout_constraintStart_toEndOf="@id/projectEdit"
+        app:layout_constraintBottom_toTopOf="@id/projectList"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/project_previous"
+        app:layout_constraintHorizontal_weight="0"
         />
 
     <LinearLayout

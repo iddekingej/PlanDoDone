@@ -46,19 +46,17 @@ class TodoListPagerFragment:FragmentBase() {
         val lArguments=arguments
         if(lArguments != null){
             projectId=lArguments.getInt(P_ProjectID)
-            project=Globals.db?.getProject(projectId)
+            project=getDB()?.getProject(projectId)
             lastProject=lArguments.getBoolean(P_lastProject)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("TODO", "onResume $projectId");
-        val lLast=Globals.db?.getLastProjectId()
+        Log.d("TODO", "onResume $projectId")
         val lBinding=binding
         if(lBinding != null){
-            lBinding.previousTodo.visibility=if(projectId>-1){ View.VISIBLE} else {View.GONE}
-            lBinding.nextTodo.visibility=if(lLast != null && projectId!=lLast){ View.VISIBLE} else {View.GONE}
+
             refreshData()
             val lParent=lBinding.root.parent
             if(lParent != null) {
@@ -77,7 +75,7 @@ class TodoListPagerFragment:FragmentBase() {
                 lBinding.title.setText(R.string.project_active_todo)
 
             } else {
-                val lProject = Globals.db?.getProject(projectId)
+                val lProject = getDB()?.getProject(projectId)
                 if (lProject != null) {
                     lBinding.title.text = lProject.name
                 }
@@ -91,9 +89,9 @@ class TodoListPagerFragment:FragmentBase() {
         pSavedInstanceState: Bundle?
     ): View {
         super.onCreateView(pInflater, pContainer, pSavedInstanceState)
-        Log.d("TODO", "onCreateView $projectId");
+        Log.d("TODO", "onCreateView $projectId")
 
-        val lDb=Globals.db
+        val lDb=getDB()
         var lTodoList: LinkedList<Todo>?=null
         val lBinding=FragmentTodolistBinding.inflate(pInflater,pContainer,false)
         binding=lBinding
@@ -107,27 +105,13 @@ class TodoListPagerFragment:FragmentBase() {
 
             } else {
                 lTodoList =lDb.getTodos(projectId)
-                val lProject=Globals.db?.getProject(projectId)
+                val lProject=getDB()?.getProject(projectId)
                 if(lProject != null){
                     lBinding.title.text=lProject.name
                 }
             }
 
-            lBinding.goFirst.setOnClickListener{
-                val lBundle=Bundle();
-                lBundle.putInt(ProjectListFragment.PAR_PAGE,0)
-                setFragmentResult(ProjectListFragment.KEY_TODO_LIST_NAVIGATION,lBundle)
-            }
-            lBinding.nextTodo.setOnClickListener {
-                val lBundle=Bundle()
-                lBundle.putInt(ProjectListFragment.PAR_DIRECTION,1)
-                setFragmentResult(ProjectListFragment.KEY_TODO_LIST_NAVIGATION,lBundle)
-            }
-            lBinding.previousTodo.setOnClickListener {
-                val lBundle=Bundle()
-                lBundle.putInt(ProjectListFragment.PAR_DIRECTION,-1)
-                setFragmentResult(ProjectListFragment.KEY_TODO_LIST_NAVIGATION,lBundle)
-            }
+
 
             lBinding.addTodo.setOnClickListener {
                 addTodo()

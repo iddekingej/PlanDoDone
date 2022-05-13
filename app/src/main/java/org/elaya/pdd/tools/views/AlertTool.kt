@@ -1,19 +1,17 @@
 package org.elaya.pdd.tools.views
 
-import android.app.Activity
-import android.content.Context
+
 import androidx.annotation.StringRes
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import kotlin.jvm.JvmOverloads
-import org.elaya.pdd.tools.views.AlertTool
 import org.elaya.pdd.R
 
 object AlertTool {
     /**
      *
-     * @param pContext   Context
+     * @param pFragment   Context
      * @param pTitle     Title of alert
      * @param pButton    Positive button label text
      * @param pOnClick   OnClick event when pressed on button
@@ -27,7 +25,7 @@ object AlertTool {
         pOnClick: DialogInterface.OnClickListener,
         pHasActivityFinish: Boolean
     ): AlertDialog.Builder? {
-        val lContext = pFragment.context;
+        val lContext = pFragment.context
         if(lContext != null) {
             val lBuilder = AlertDialog.Builder(lContext)
             lBuilder.setTitle(pTitle)
@@ -35,13 +33,13 @@ object AlertTool {
             if (pHasActivityFinish) {
                 lBuilder.setOnCancelListener { dialog: DialogInterface? -> pFragment.parentFragmentManager.popBackStack() }
             }
-            return lBuilder;
+            return lBuilder
         }
         return null
     }
 
     private fun show(pFragment: Fragment, pBuilder: AlertDialog.Builder) {
-        var lActivity=pFragment.activity;
+        val lActivity=pFragment.activity
         if(lActivity != null && !lActivity.isFinishing) {
             val lAlertDialog = pBuilder.create()
             lAlertDialog.setCanceledOnTouchOutside(false)
@@ -87,7 +85,7 @@ object AlertTool {
         @StringRes pMessage: Int,
         pOnClick: DialogInterface.OnClickListener?
     ) {
-        var lContext = pFragment.context;
+        val lContext = pFragment.context
         if(lContext != null) {
             val lBuilder = AlertDialog.Builder(lContext)
             lBuilder.setTitle(pTitle)

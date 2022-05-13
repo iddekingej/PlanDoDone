@@ -39,8 +39,9 @@ class ProjectEditFragment: DialogFragmentBase() {
 
     private fun dialogSave(pView:View){
         val lBinding=binding
-        if(lBinding != null) {
-            Globals.db?.saveProject(projectId,lBinding.projectNameEdit.text.toString(),lBinding.isActive.isChecked)
+        val lDb=getDB()
+        if(lBinding != null ) {
+            lDb?.saveProject(projectId,lBinding.projectNameEdit.text.toString(),lBinding.isActive.isChecked)
 
             dismissResult(Bundle())
         } else {
@@ -54,7 +55,7 @@ class ProjectEditFragment: DialogFragmentBase() {
 
     private fun deleteProject(pView:View)
     {
-        Globals.db?.deleteProject(projectId)
+        getDB()?.deleteProject(projectId)
         dismissResult(Bundle())
     }
 
@@ -74,13 +75,13 @@ class ProjectEditFragment: DialogFragmentBase() {
             lBinding.isActive.isChecked=true
             projectId=-1
             lBinding.remove.visibility=View.GONE
-            lBinding.save.isEnabled=false;
+            lBinding.save.isEnabled=false
         } else {
-            val lName=lArguments.getString(P_NAME,"");
+            val lName=lArguments.getString(P_NAME,"")
             lBinding.projectNameEdit.setText(lName)
             lBinding.isActive.isChecked=lArguments.getBoolean(P_IS_ACTIVE)
             projectId=lArguments.getInt(P_ID,-1)
-            lBinding.remove.visibility=if(Globals.db?.projectHasTodo(projectId)==true){ View.GONE} else {View.VISIBLE}
+            lBinding.remove.visibility=if(getDB()?.projectHasTodo(projectId)==true){ View.GONE} else {View.VISIBLE}
             lBinding.save.isEnabled=lName.isNotEmpty()
         }
         lBinding.projectNameEdit.addTextChangedListener(object:TextWatcher{

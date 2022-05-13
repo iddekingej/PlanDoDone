@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import org.elaya.pdd.R
+import org.elaya.pdd.db.DataSource
+import org.elaya.pdd.settings.Globals
 
 
 open class FragmentBase : Fragment(),FragmentResultListener {
@@ -21,9 +23,17 @@ open class FragmentBase : Fragment(),FragmentResultListener {
         const val P_KEY="FRAGMENT_KEY"
     }
     private var menu:Menu?=null
-    protected fun getFragmentKey():String?
+    private fun getFragmentKey():String?
     {
         return javaClass.canonicalName
+    }
+
+    protected fun getDB():DataSource?{
+        val lContext=context;
+        if(lContext != null) {
+            return Globals.getDB(lContext);
+        }
+        return null;
     }
 
     protected open fun getMenuId():Int
