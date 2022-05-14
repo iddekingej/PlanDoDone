@@ -118,7 +118,11 @@ class ToDoEditFragment : FragmentBase() {
             val lProjects = lDb.getProjects()
             var lProjectId=-1
             if(lProject == null) {
-                lProjects.addFirst(Project(-1, "", true))
+                if(lProjects.size==1){
+                    lProjectId=lProjects.first.id;
+                } else {
+                    lProjects.addFirst(Project(-1, "", true))
+                }
             } else {
                 lProjectId=lProject.id
             }

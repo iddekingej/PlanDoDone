@@ -1,7 +1,9 @@
 package org.elaya.pdd.project
 
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import org.elaya.pdd.R
 
 class Project: Parcelable {
 
@@ -59,8 +61,15 @@ class Project: Parcelable {
             return arrayOfNulls(size)
         }
 
+        fun makeAllProject(pContext:Context):Project
+        {
+            return Project(ID_ALL_PROJECTS,pContext.getString(R.string.project_all_todo),true);
+        }
+
         const val TABLE_NAME="project"
         const val F_ID="id"
         const val F_NAME="name"
+        const val ID_ALL_PROJECTS=-1;
+
     }
 }

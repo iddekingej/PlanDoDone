@@ -33,11 +33,11 @@ class DataSource(pContext:Context) {
     }
 
         private inline fun <T>fetchRow(pQuery:String,pArgs:Array<String> ,pBody:(it:Cursor)->T):T?{
-        var it:Cursor?=null
+            var it:Cursor?=null
             try {
-            it=db.rawQuery(pQuery,pArgs)
+                it=db.rawQuery(pQuery,pArgs)
                 if(it.moveToNext()) {
-                return pBody(it)
+                    return pBody(it)
                 }
         }finally {
             it?.close()

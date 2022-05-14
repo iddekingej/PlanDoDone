@@ -5,10 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.setFragmentResult
 import org.elaya.pdd.R
 import org.elaya.pdd.databinding.FragmentTodolistBinding
-import org.elaya.pdd.settings.Globals
 import org.elaya.pdd.todo.ToDoEditFragment
 import org.elaya.pdd.todo.Todo
 import org.elaya.pdd.todo.TodoList
@@ -72,7 +70,7 @@ class TodoListPagerFragment:FragmentBase() {
         if(lBinding != null) {
             if (projectId == -1) {
 
-                lBinding.title.setText(R.string.project_active_todo)
+                lBinding.title.setText(R.string.project_all_todo)
 
             } else {
                 val lProject = getDB()?.getProject(projectId)
@@ -101,7 +99,7 @@ class TodoListPagerFragment:FragmentBase() {
 
             if (projectId == -1) {
                 lTodoList = lDb.getActiveTodos()
-                lBinding.title.setText(R.string.project_active_todo)
+                lBinding.title.setText(R.string.project_all_todo)
 
             } else {
                 lTodoList =lDb.getTodos(projectId)

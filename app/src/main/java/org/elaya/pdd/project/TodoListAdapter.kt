@@ -17,7 +17,8 @@ class TodoListAdapter(pFragment: Fragment) : FragmentStateAdapter(pFragment) {
         var lContext=pFragment.context
         if(lContext != null){
             context=lContext;
-            projects=Globals.getDB(lContext).getProjects();
+            val lProjects=Globals.getDB(lContext).getProjects();
+            projects=lProjects
         }
     }
 
@@ -40,7 +41,7 @@ class TodoListAdapter(pFragment: Fragment) : FragmentStateAdapter(pFragment) {
     fun getPosFromProject(pProject:Project):Int{
         val lProjects=projects
         if(lProjects != null) {
-            for (lCnt in 0..lProjects.size) {
+            for (lCnt in 0 until lProjects.size) {
                 if(lProjects[lCnt].id==pProject.id){
                     return lCnt
                 }

@@ -41,7 +41,7 @@ class ProjectListFragment : FragmentBase() {
         setupProjectList()
     }
 
-        private fun editProject(pView:View)
+    private fun editProject(pView:View)
     {
         val lCurrentProject=currentProject
         if(lCurrentProject != null){
@@ -108,13 +108,13 @@ class ProjectListFragment : FragmentBase() {
             if (currentSelectedProject >=0 && currentSelectedProject<lBinding.projectList.childCount) {
                 setProjectColor(currentSelectedProject,false)
             }
-            val lSelected=pPosition-1
+            val lSelected=pPosition
             currentProject=todoListAdapter?.getProjectByPos(lSelected)
             if(lSelected>=0 && lSelected<=lBinding.projectList.childCount){
                 setProjectColor(lSelected,true)
             }
             currentSelectedProject=lSelected
-            lBinding.previousTodo.visibility=if(lSelected>-1){ View.VISIBLE} else {View.GONE}
+            lBinding.previousTodo.visibility=if(lSelected>Project.ID_ALL_PROJECTS){ View.VISIBLE} else {View.GONE}
             val lLast=getDB()?.getLastProjectId()
 
             lBinding.nextTodo.visibility=if(lLast != null && lSelected!=lLast){ View.VISIBLE} else {View.GONE}
@@ -133,6 +133,12 @@ class ProjectListFragment : FragmentBase() {
                 if (lBinding != null) {
                     lBinding.todoListPager.currentItem = lNo+1
                 }
+            } else if(pProject.id==-1){
+                val lBinding = binding
+                if (lBinding != null) {
+                    lBinding.todoListPager.currentItem = 0
+                }
+
             }
         }
     }
@@ -155,6 +161,7 @@ class ProjectListFragment : FragmentBase() {
 
         if(lDb != null && lBinding != null) {
             val lList = lDb.getProjects()
+            lList.add(0,Project(Project.ID_ALL_PROJECTS,resources.getString(R.string.project_all_todo),true))
             projectHandler?.makeList(layoutInflater, lList)
 
             if( lList.size != 0) {
@@ -206,9 +213,7 @@ class ProjectListFragment : FragmentBase() {
     }
 
     companion object {
-        const val KEY_TODO_LIST_NAVIGATION="todo_list_navigation"
-        const val PAR_DIRECTION="direction"
-        const val PAR_PAGE="page"
+
         const val FL_EDIT_PROJECT="EDIT_PROJECT"
         @JvmStatic
         fun newInstance() = ProjectListFragment()
