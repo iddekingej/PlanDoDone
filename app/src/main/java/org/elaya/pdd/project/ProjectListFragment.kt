@@ -8,13 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.NonNull
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.viewpager2.widget.ViewPager2
 import org.elaya.pdd.R
 import org.elaya.pdd.databinding.FragmentProcesListBinding
-import org.elaya.pdd.settings.Globals
 import org.elaya.pdd.tools.fragments.FragmentBase
 
 
@@ -105,19 +102,35 @@ class ProjectListFragment : FragmentBase() {
     {
         val lBinding=binding
         if(lBinding != null) {
-            if (currentSelectedProject >=0 && currentSelectedProject<lBinding.projectList.childCount) {
-                setProjectColor(currentSelectedProject,false)
+            if (currentSelectedProject >= 0 && currentSelectedProject < lBinding.projectList.childCount) {
+                setProjectColor(currentSelectedProject, false)
             }
-            val lSelected=pPosition
-            currentProject=todoListAdapter?.getProjectByPos(lSelected)
-            if(lSelected>=0 && lSelected<=lBinding.projectList.childCount){
-                setProjectColor(lSelected,true)
+            if (pPosition > 0) {
+                currentProject = todoListAdapter?.getProjectByPos(pPosition - 1)
+            } else {
+                currentProject = null
             }
-            currentSelectedProject=lSelected
-            lBinding.previousTodo.visibility=if(lSelected>Project.ID_ALL_PROJECTS){ View.VISIBLE} else {View.GONE}
-            val lLast=getDB()?.getLastProjectId()
+            if (pPosition >= 0 && pPosition <= lBinding.projectList.childCount) {
+                setProjectColor(pPosition, true)
+            }
+            currentSelectedProject = pPosition
+            lBinding.previousTodo.visibility = if (pPosition > 0) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+            lBinding.projectEdit.visibility = if (currentProject != null) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+            val lLast = getDB()?.getLastProjectId()
 
-            lBinding.nextTodo.visibility=if(lLast != null && lSelected!=lLast){ View.VISIBLE} else {View.GONE}
+            lBinding.nextTodo.visibility = if (lLast != null && pPosition != lLast) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
         }
 
     }

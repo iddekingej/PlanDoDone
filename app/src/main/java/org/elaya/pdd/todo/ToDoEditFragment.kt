@@ -89,7 +89,7 @@ class ToDoEditFragment : FragmentBase() {
             if(lSelected is Project){
                 lProjectSelected=lSelected.id != -1
             }
-            lBinding.saveButton.isEnabled = lBinding.titleInput.text.isNotEmpty() && lProjectSelected
+            lBinding.saveButton.isEnabled = lBinding.titleInput.text.isNotEmpty() && lBinding.titleInput.text.isNotBlank() && lProjectSelected
         }
     }
 

@@ -41,10 +41,12 @@ class TodoListAdapter(pFragment: Fragment) : FragmentStateAdapter(pFragment) {
     fun getPosFromProject(pProject:Project):Int{
         val lProjects=projects
         if(lProjects != null) {
-            for (lCnt in 0 until lProjects.size) {
+            var lCnt=0;
+            for( lProject in lProjects){
                 if(lProjects[lCnt].id==pProject.id){
                     return lCnt
                 }
+                lCnt++;
             }
         }
         return -1
