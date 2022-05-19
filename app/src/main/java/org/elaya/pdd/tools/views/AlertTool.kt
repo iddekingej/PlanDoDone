@@ -31,7 +31,7 @@ object AlertTool {
             lBuilder.setTitle(pTitle)
             lBuilder.setPositiveButton(pButton, pOnClick)
             if (pHasActivityFinish) {
-                lBuilder.setOnCancelListener { dialog: DialogInterface? -> pFragment.parentFragmentManager.popBackStack() }
+                lBuilder.setOnCancelListener { _ -> pFragment.parentFragmentManager.popBackStack() }
             }
             return lBuilder
         }

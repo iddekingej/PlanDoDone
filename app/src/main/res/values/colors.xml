@@ -14,7 +14,7 @@
     <color name="color_selected">#6C6CCC</color>
     <color name="color_text_selected">#FFFFFF</color>
     <color name="color_text_not_selected">#000000</color>
-    <color name="list_background">#ccc</color>
+    <color name="list_background">#ddd</color>
     <color name="gen_title_background">#0C1A5E</color>
     <color name="gen_title_text_color">#FFFFFF</color>
     <color name="gen_text_color">#000000</color>

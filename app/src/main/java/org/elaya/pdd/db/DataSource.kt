@@ -16,11 +16,6 @@ class DataSource(pContext:Context) {
         db=lOpenHelper.readableDatabase
     }
 
-    private fun rawQuery(pQuery:String):Cursor{
-        return db.rawQuery(pQuery, emptyArray())
-    }
-
-    
 
     private fun hasResult(pQuery:String, pParameters:Array<String>? ):Boolean{
         db.rawQuery(pQuery,pParameters).use{
@@ -73,15 +68,17 @@ class DataSource(pContext:Context) {
             return fetchRows(pQuery, emptyArray(),pBody)
     }
 
-        fun saveProject(pId:Int,pName:String,pIsActive:Boolean){
+        fun saveProject(pId:Int,pName:String,pIsActive:Boolean):Int{
         val lValue=ContentValues()
         lValue.put("name",pName)
         lValue.put("enabled",if(pIsActive)1 else 0)
+        var lId=pId;
         if(pId==-1){
-            db.insert("project",null,lValue)
+            lId= db.insert("project",null,lValue).toInt()
         } else {
             db.update("project",lValue,"id=?",arrayOf(pId.toString()))
         }
+        return lId;
     }
 
     fun getProject(pProjectId:Int):Project?{
@@ -106,10 +103,6 @@ class DataSource(pContext:Context) {
         return hasResult("select 1 as dm from "+Todo.TABLE_NAME+" where id_project=? limit 1",arrayOf(pProjectId.toString()) )
     }
 
-
-    fun getFirstProjectId():Int?{
-        return fetchSingleFieldInt("select min("+Project.F_ID+") as id from "+Project.TABLE_NAME)
-    }
 
     fun getLastProjectId():Int?{
         return fetchSingleFieldInt("select "+Project.F_ID+" from "+Project.TABLE_NAME+"  order by "+Project.F_NAME+" desc limit 1")
@@ -137,14 +130,14 @@ class DataSource(pContext:Context) {
     fun getTodos(pProjectId: Int):LinkedList<Todo>
     {
         return fetchRows("select id,title,description,status from "+Todo.TABLE_NAME+" where id_project=?",arrayOf(pProjectId.toString())){
-            Todo(it.getInt(0),pProjectId,it.getInt(3),it.getString(1),it.getString(2))
+            Todo(it.getInt(0),pProjectId,it.getString(1),it.getString(2),it.getInt(3))
         }
     }
 
     fun getActiveTodos():LinkedList<Todo>
     {
         return fetchRows("select id,title,description,status,id_project from "+Todo.TABLE_NAME+" where status ="+Todo.STATUS_STARTED){
-            Todo(it.getInt(0),it.getInt(4),it.getInt(3),it.getString(1),it.getString(2))
+            Todo(it.getInt(0),it.getInt(4),it.getString(1),it.getString(2),it.getInt(3))
         }
     }
 

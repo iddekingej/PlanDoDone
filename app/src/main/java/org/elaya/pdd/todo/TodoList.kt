@@ -39,7 +39,7 @@ abstract class TodoList(pParent: TableLayout): ListViewHandler<TableLayout, Todo
         }
     }
 
-    override fun checkData(pObject: Any): Boolean {
+    override fun checkData(pObject: Todo?): Boolean {
         return pObject is Todo
     }
 

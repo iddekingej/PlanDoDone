@@ -33,7 +33,6 @@ class ProjectListFragment : FragmentBase() {
     }
 
     private fun onEditProjectResult(pRequestKey: String, pResult: Bundle) {
-        Log.d("TODO","onEditProjectResult")
         refreshCurrent()
         setupProjectList()
     }
@@ -86,32 +85,22 @@ class ProjectListFragment : FragmentBase() {
         return lBinding.root
     }
 
-    private fun setProjectColor(pIndex:Int,pSelected:Boolean)
-    {
-        val lBinding=binding
-        if(lBinding != null) {
-            val lView = lBinding.projectList.getChildAt(pIndex) as LinearLayout
-            lView.setBackgroundColor(if(pSelected){ getColor(R.color.color_selected)} else {Color.TRANSPARENT})
-            val lTextView = lView.getChildAt(0) as TextView
-            lTextView.setTextColor(getColor(if(pSelected){R.color.color_text_selected}
-                                            else {R.color.gen_text_color }))
-        }
-    }
+
 
     private fun todoListPageSelected(pPosition:Int)
     {
         val lBinding=binding
         if(lBinding != null) {
-            if (currentSelectedProject >= 0 && currentSelectedProject < lBinding.projectList.childCount) {
-                setProjectColor(currentSelectedProject, false)
-            }
+
             if (pPosition > 0) {
                 currentProject = todoListAdapter?.getProjectByPos(pPosition - 1)
             } else {
                 currentProject = null
             }
-            if (pPosition >= 0 && pPosition <= lBinding.projectList.childCount) {
-                setProjectColor(pPosition, true)
+
+            val lCurrentProject=currentProject;
+            if (lCurrentProject != null ) {
+                projectHandler?.setSelection(lCurrentProject)
             }
             currentSelectedProject = pPosition
             lBinding.previousTodo.visibility = if (pPosition > 0) {

@@ -16,6 +16,8 @@
     <style name="title" parent="baseTextView">
         <item name="android:background">@color/gen_title_background</item>
         <item name="android:textColor">@color/gen_title_text_color</item>
+        <item name="android:paddingStart">7dp</item>
+        <item name="android:paddingEnd">7dp</item>
         <item name="android:textAlignment">center</item>
     </style>
     <style name="baseTextView" parent="android:Widget.DeviceDefault.TextView">
@@ -23,6 +25,7 @@
     </style>
 
     <style name="projectNameTitle" parent="baseTextView">
+
         <item name="android:textSize">25sp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -47,7 +50,7 @@
     </style>
 
     <style name="listViewStyle">
-        <item name="android:background">@color/list_background</item>
+        <item name="android:background">@drawable/list</item>
         <item name="android:padding">4dp</item>
     </style>
 </resources>

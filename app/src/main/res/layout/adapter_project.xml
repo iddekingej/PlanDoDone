@@ -8,6 +8,8 @@
     android:layout_height="wrap_content"
     android:lines="1"
     android:ellipsize="end"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
     style="@style/listViewItemStyle"
     />
 </LinearLayout>

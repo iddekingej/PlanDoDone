@@ -2,31 +2,20 @@ package org.elaya.pdd.todo
 
 import android.os.Parcel
 import android.os.Parcelable
+import org.elaya.pdd.tools.data.Data
 
-class Todo :Parcelable {
+class Todo(_id:Int,
+           var projectId:Int,
+           var title:String,
+           var description:String,
+           var status:Int
+) :Data(_id),Parcelable {
 
-    private var _id:Int
-    var projectId:Int
-    var title:String
-    var description:String
-    var status:Int
 
-    val id:Int get()=_id
 
-    constructor(pId:Int,pProjectId: Int,pStatus:Int,pTitle:String,pDescription: String){
-        _id=pId
-        title=pTitle
-        description=pDescription
-        projectId=pProjectId
-        status=pStatus
-    }
 
-    constructor(pSource:Parcel){
-        _id=pSource.readInt()
-        projectId=pSource.readInt()
-        title=pSource.readString()?:""
-        description=pSource.readString()?:""
-        status=pSource.readInt()
+
+    constructor(pSource:Parcel):this(pSource.readInt(),pSource.readInt(),pSource.readString()?:"",pSource.readString()?:"",pSource.readInt()){
     }
 
     override fun writeToParcel(pDest: Parcel?, pFlags: Int) {

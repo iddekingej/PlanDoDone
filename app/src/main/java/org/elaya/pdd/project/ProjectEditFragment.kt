@@ -40,10 +40,18 @@ class ProjectEditFragment: DialogFragmentBase() {
     private fun dialogSave(pView:View){
         val lBinding=binding
         val lDb=getDB()
-        if(lBinding != null ) {
-            lDb?.saveProject(projectId,lBinding.projectNameEdit.text.toString(),lBinding.isActive.isChecked)
-
-            dismissResult(Bundle())
+        if(lBinding != null )  {
+            var lId=-1;
+            if(lDb != null) {
+                lId = lDb.saveProject(
+                    projectId,
+                    lBinding.projectNameEdit.text.toString(),
+                    lBinding.isActive.isChecked
+                )
+            }
+            val lBundle=Bundle()
+            lBundle.putInt("projectId",lId)
+            dismissResult(lBundle)
         } else {
             dismiss()
         }

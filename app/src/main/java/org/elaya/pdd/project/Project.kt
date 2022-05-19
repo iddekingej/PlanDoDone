@@ -4,23 +4,12 @@ import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import org.elaya.pdd.R
+import org.elaya.pdd.tools.data.Data
 
-class Project: Parcelable {
+class Project(_id:Int,private var _name:String,private var _isActive:Boolean,): Data(_id),Parcelable {
 
-    private val _id:Int
-    private var _name:String
-    private var _isActive:Boolean
 
-    constructor(pId:Int,pName: String,pIsActive: Boolean){
-        _id=pId
-        _name=pName
-        _isActive=pIsActive
-    }
-
-    constructor(parcel: Parcel) {
-        _id = parcel.readInt()
-        _name = parcel.readString() ?: ""
-        _isActive = parcel.readByte() != 0.toByte()
+    constructor(parcel: Parcel) : this(parcel.readInt(),parcel.readString() ?: "",parcel.readByte() != 0.toByte()){
 
     }
 
@@ -30,7 +19,6 @@ class Project: Parcelable {
         _isActive=pIsActive
     }
 
-    val id:Int            get()=_id
     val name:String       get()=_name
     val isActive:Boolean  get()=_isActive
 

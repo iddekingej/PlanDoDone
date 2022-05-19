@@ -9,7 +9,7 @@ import org.elaya.pdd.tools.views.ListViewHandler
 
 abstract class ProjectListViewHandler(pParent:LinearLayout) : ListViewHandler<LinearLayout, Project,AdapterProjectBinding>(pParent) {
 
-    override fun checkData(pObject: Any): Boolean {
+    override fun checkData(pObject: Project?): Boolean {
         return pObject is Project
     }
 

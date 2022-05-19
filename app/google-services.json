@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "241760512450",
+    "project_id": "plan-do-done",
+    "storage_bucket": "plan-do-done.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241760512450:android:1a7ea1696b3acbcd6ece5b",
+        "android_client_info": {
+          "package_name": "org.elaya.pdd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241760512450-tsq1o1r93su987q0ach1ourcjlst5j1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHQf-5LneAIyUE9BA3yQSZ3Rger51nHEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241760512450-tsq1o1r93su987q0ach1ourcjlst5j1a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
