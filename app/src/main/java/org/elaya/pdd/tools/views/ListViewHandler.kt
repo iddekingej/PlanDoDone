@@ -2,6 +2,7 @@ package org.elaya.pdd.tools.views
 
 import android.content.res.Resources
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,19 +16,17 @@ import org.elaya.pdd.tools.data.DataEvent
 abstract class ListViewHandler<T : ViewGroup,U : Data,V : ViewBinding>(pParent: T) {
     private val parent:T = pParent
     private var _onClickEvent:DataEvent<U>?=null
-    private var views:Array<ViewBinding?>?=null;
-    private var items:List<U>?=null;
-    private var selected:Int=-1;
-    private var _selectedItem:U?=null;
+    private var views:Array<ViewBinding?>?=null
+    private var items:List<U>?=null
+    private var selected:Int=-1
+    private var _selectedItem:U?=null
     val selectedItem:U? get()=_selectedItem;
-
 
 
     protected abstract fun makeView(pInflater:LayoutInflater,pParent:ViewGroup):V
 
     protected abstract fun fillData(pView:V,pData:U)
 
-    protected abstract fun checkData(pObject:U?):Boolean
 
     protected fun getResources(): Resources
     {
@@ -110,10 +109,9 @@ abstract class ListViewHandler<T : ViewGroup,U : Data,V : ViewBinding>(pParent: 
             if(lIndex is Int) {
 
                 val lObject = lItems[lIndex];
-                if (checkData(lObject)) {
-                    onClickEvent(lObject )
-                    setSelection(lIndex);
-                }
+                onClickEvent(lObject )
+                setSelection(lIndex);
+
             }
 
         }
@@ -123,25 +121,30 @@ abstract class ListViewHandler<T : ViewGroup,U : Data,V : ViewBinding>(pParent: 
     {
 
         parent.removeAllViews()
-        views= Array(pItems.size){null}
-        items=pItems;
-        var lCnt=0;
-        pItems.forEach {
+        var lItems:Array<ViewBinding?> = Array(pItems.size){null}
+        views=lItems
+        items=pItems
+
+        val lSelectedItem=_selectedItem
+        var lNewSelected:U?=null
+        selected=-1
+        _selectedItem=null
+        for((lCnt,it) in pItems.withIndex()){
+            if(lSelectedItem != null) {
+                if (it.id == lSelectedItem.id){
+                    lNewSelected=it;
+                }
+            }
             val lItem= makeView(pLayoutInflater,parent)
             lItem.root.tag=lCnt
             fillData(lItem,it)
             lItem.root.setOnClickListener(this::clickEvent)
-            var lItems=views
-            if(lItems != null) {
-                lItems[lCnt] = lItem;
-            }
-            lCnt++
+            lItems[lCnt] = lItem;
         }
-        val lSelectedItem=_selectedItem;
-        selected=-1
-        _selectedItem=null
-        if(lSelectedItem != null) {
-            setSelection(lSelectedItem);
+
+        if(lNewSelected != null) {
+            Log.d("WGC",lSelectedItem.toString())
+            setSelection(lNewSelected);
         }
     }
 

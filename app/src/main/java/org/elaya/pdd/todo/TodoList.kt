@@ -39,11 +39,6 @@ abstract class TodoList(pParent: TableLayout): ListViewHandler<TableLayout, Todo
         }
     }
 
-    override fun checkData(pObject: Todo?): Boolean {
-        return pObject is Todo
-    }
-
-
 
     override fun makeView(pInflater: LayoutInflater, pParent: ViewGroup): TodoIncItemBinding {
         return TodoIncItemBinding.inflate(pInflater,pParent,true)

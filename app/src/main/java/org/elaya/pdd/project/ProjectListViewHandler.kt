@@ -9,10 +9,6 @@ import org.elaya.pdd.tools.views.ListViewHandler
 
 abstract class ProjectListViewHandler(pParent:LinearLayout) : ListViewHandler<LinearLayout, Project,AdapterProjectBinding>(pParent) {
 
-    override fun checkData(pObject: Project?): Boolean {
-        return pObject is Project
-    }
-
 
     override fun makeView(pInflater: LayoutInflater, pParent: ViewGroup): AdapterProjectBinding {
         return AdapterProjectBinding.inflate(pInflater,pParent,true)

@@ -23,9 +23,8 @@ import org.elaya.pdd.tools.fragments.FragmentBase
 class ProjectListFragment : FragmentBase() {
     private var binding:FragmentProcesListBinding?=null
     private var projectHandler:ProjectListViewHandler?=null
-    private var currentProject:Project?=null
     private var todoListAdapter:TodoListAdapter?=null
-    private var currentSelectedProject:Int=-1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +32,30 @@ class ProjectListFragment : FragmentBase() {
     }
 
     private fun onEditProjectResult(pRequestKey: String, pResult: Bundle) {
-        refreshCurrent()
-        setupProjectList()
+        if(pRequestKey== FL_EDIT_PROJECT) {
+            refreshCurrent()
+            setupProjectList()
+
+            val lIsNew=pResult.getBoolean(ProjectEditFragment.R_IS_NEW,false);
+            if(lIsNew){
+                val lProjectId=pResult.getInt(ProjectEditFragment.R_PROJECT_ID)
+                val lAdapter=todoListAdapter;
+                if(lAdapter != null) {
+                    val lPos = lAdapter.getProjectById(lProjectId)
+                    if (lPos != -1) {
+                        val lBinding = binding
+                        if (lBinding != null) {
+                            lBinding.todoListPager.currentItem = lPos + 1
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun editProject(pView:View)
     {
-        val lCurrentProject=currentProject
+        val lCurrentProject=projectHandler?.selectedItem
         if(lCurrentProject != null){
             startDialogFragment("projectEdit", FL_EDIT_PROJECT) {
                 ProjectEditFragment.newInstance(lCurrentProject.id,lCurrentProject.name,lCurrentProject.isActive)
@@ -89,36 +105,31 @@ class ProjectListFragment : FragmentBase() {
 
     private fun todoListPageSelected(pPosition:Int)
     {
+
         val lBinding=binding
         if(lBinding != null) {
 
-            if (pPosition > 0) {
-                currentProject = todoListAdapter?.getProjectByPos(pPosition - 1)
-            } else {
-                currentProject = null
-            }
+            var lProjectHandler=projectHandler;
+            if(lProjectHandler != null){
+                lProjectHandler.setSelection(pPosition)
 
-            val lCurrentProject=currentProject;
-            if (lCurrentProject != null ) {
-                projectHandler?.setSelection(lCurrentProject)
-            }
-            currentSelectedProject = pPosition
-            lBinding.previousTodo.visibility = if (pPosition > 0) {
-                View.VISIBLE
-            } else {
-                View.INVISIBLE
-            }
-            lBinding.projectEdit.visibility = if (currentProject != null) {
-                View.VISIBLE
-            } else {
-                View.INVISIBLE
-            }
-            val lLast = getDB()?.getLastProjectId()
+                lBinding.previousTodo.visibility = if (pPosition > 0) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
+                lBinding.projectEdit.visibility = if (lProjectHandler.selectedItem != null) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
+                val lLast = getDB()?.getLastProjectId()
 
-            lBinding.nextTodo.visibility = if (lLast != null && pPosition != lLast) {
-                View.VISIBLE
-            } else {
-                View.INVISIBLE
+                lBinding.nextTodo.visibility = if (lLast != null && pPosition != lLast) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
             }
         }
 

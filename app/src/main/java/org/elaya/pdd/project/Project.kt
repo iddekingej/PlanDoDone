@@ -23,6 +23,11 @@ class Project(_id:Int,private var _name:String,private var _isActive:Boolean,): 
     val isActive:Boolean  get()=_isActive
 
 
+    override fun  toString():String
+    {
+        return "$_id/$_name/$isActive";
+    }
+
     override fun describeContents(): Int {
           return  0
     }
@@ -36,9 +41,6 @@ class Project(_id:Int,private var _name:String,private var _isActive:Boolean,): 
         }
     }
 
-    override fun toString(): String {
-        return _name
-    }
 
     companion object CREATOR : Parcelable.Creator<Project> {
         override fun createFromParcel(parcel: Parcel): Project {

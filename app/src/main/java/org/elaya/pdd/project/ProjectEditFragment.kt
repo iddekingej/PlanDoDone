@@ -17,6 +17,8 @@ class ProjectEditFragment: DialogFragmentBase() {
         const val P_NAME = "name"
         const val P_IS_ACTIVE = "isActive"
         const val P_ID="id"
+        const val R_PROJECT_ID="projectId"
+        const val R_IS_NEW="isNew"
 
         fun newInstance(pId:Int,pName:String,pIsActive:Boolean):ProjectEditFragment{
             val lBundle=Bundle()
@@ -50,7 +52,8 @@ class ProjectEditFragment: DialogFragmentBase() {
                 )
             }
             val lBundle=Bundle()
-            lBundle.putInt("projectId",lId)
+            lBundle.putInt(R_PROJECT_ID,lId)
+            lBundle.putBoolean(R_IS_NEW,projectId == -1)
             dismissResult(lBundle)
         } else {
             dismiss()

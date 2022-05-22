@@ -18,14 +18,40 @@ class TodoListAdapter(pFragment: Fragment) : FragmentStateAdapter(pFragment) {
         if(lContext != null){
             context=lContext;
             val lProjects=Globals.getDB(lContext).getProjects();
+
             projects=lProjects
         }
     }
 
+
     override fun getItemId(pPosition: Int): Long {
-        return pPosition.toLong()
+        val lProjects=projects;
+        if(lProjects != null && pPosition>0){
+            return lProjects[pPosition-1].id.toLong();
+        }
+        return -1;
     }
+
+
+    fun getProjectById(pProjectId:Int):Int{
+        val lProjects=projects
+        if(lProjects != null) {
+            for((lCnt, lProject) in lProjects.withIndex()){
+
+                if(lProject.id==pProjectId){
+                    return lCnt
+                }
+            }
+        }
+
+        return -1
+    }
+
+
+
     fun getProjectByPos(pPos:Int):Project?{
+
+
         val lProjects=projects
         if(lProjects != null){
             if(pPos>=0 && pPos< lProjects.size) {
@@ -41,12 +67,10 @@ class TodoListAdapter(pFragment: Fragment) : FragmentStateAdapter(pFragment) {
     fun getPosFromProject(pProject:Project):Int{
         val lProjects=projects
         if(lProjects != null) {
-            var lCnt=0;
-            for( lProject in lProjects){
-                if(lProjects[lCnt].id==pProject.id){
+            for((lCnt, lProject) in lProjects.withIndex()){
+                if(lProject.id==pProject.id){
                     return lCnt
                 }
-                lCnt++;
             }
         }
         return -1
@@ -65,8 +89,7 @@ class TodoListAdapter(pFragment: Fragment) : FragmentStateAdapter(pFragment) {
     @SuppressLint("NotifyDataSetChanged")
     fun refreshProjectList()
     {
-        Log.d("TODO","Refresh adapter")
-        var lContext=context;
+        val lContext=context;
         if(lContext != null) {
             projects = Globals.getDB(lContext).getProjects()
         }
