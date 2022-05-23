@@ -25,7 +25,7 @@ class Project(_id:Int,private var _name:String,private var _isActive:Boolean,): 
 
     override fun  toString():String
     {
-        return "$_id/$_name/$isActive";
+        return _name;
     }
 
     override fun describeContents(): Int {

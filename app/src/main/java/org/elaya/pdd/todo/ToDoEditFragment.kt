@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import org.elaya.pdd.R
 import org.elaya.pdd.databinding.FragmentTodoEditBinding
 import org.elaya.pdd.project.Project
-import org.elaya.pdd.settings.Globals
 import org.elaya.pdd.tools.data.ArraySpinnerAdapter
 import org.elaya.pdd.tools.fragments.FragmentBase
 import org.elaya.pdd.tools.views.AlertTool
@@ -133,7 +132,11 @@ class ToDoEditFragment : FragmentBase() {
             )
 
             lBinding.projectSelection.adapter = projectAdapter
-
+            lBinding.status.adapter=ArraySpinnerAdapter(
+                lContext
+            ,android.R.layout.simple_spinner_dropdown_item
+            ,lContext.resources.getStringArray(R.array.todo_status_modes)
+            )
             lBinding.projectSelection.setSelection(getIndexOf(lProjects, lProjectId))
             lBinding.projectSelection.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

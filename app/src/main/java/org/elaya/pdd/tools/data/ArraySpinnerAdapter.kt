@@ -5,9 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 
-class ArraySpinnerAdapter<T>(pContext: Context,pResource:Int,pList:List<T>): ArrayAdapter<T>(pContext,pResource,pList) {
+class ArraySpinnerAdapter<T>: ArrayAdapter<T> {
 
+        constructor(pContext: Context, pResource:Int, pList:List<T>):super(pContext,pResource,pList)
+        {
 
+        }
+
+        constructor(pContext: Context, pResource:Int, pList:Array<T>):super(pContext,pResource,pList)
+        {
+
+        }
         override fun getView(pPosition:Int,pConvertView:View?, pParent:ViewGroup):View
         {
             val lView = super.getView(pPosition, pConvertView, pParent)

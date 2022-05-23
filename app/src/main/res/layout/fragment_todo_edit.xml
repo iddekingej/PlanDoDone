@@ -101,7 +101,6 @@
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/todo_status_modes"
         app:layout_constraintTop_toTopOf="@+id/statusLabel"
         app:layout_constraintStart_toStartOf="@+id/labelBarrier"
         android:contentDescription="@string/todo_status"
