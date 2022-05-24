@@ -108,6 +108,10 @@ class DataSource(pContext:Context) {
         return fetchSingleFieldInt("select "+Project.F_ID+" from "+Project.TABLE_NAME+"  order by "+Project.F_NAME+" desc limit 1")
     }
 
+    fun hasProjects():Boolean
+    {
+        return hasResult("select 1 as dm from "+Project.TABLE_NAME+" limit 1",null);
+    }
 
     fun addTodo(pProjectId:Int,pStatus:Int,pTitle:String, pDescription:String){
         val lValues=ContentValues()

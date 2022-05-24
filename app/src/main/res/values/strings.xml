@@ -2,6 +2,7 @@
     <string name="app_name">Plan Do Done</string>
     <string name="label_gen_yes">Yes</string>
     <string name="label_gen_no">No</string>
+    <string name="label_gen_close">Close</string>
     <string name="label_gen_save">Save</string>
     <string name="label_gen_cancel">Cancel</string>
     <string name="label_gen_delete">Delete</string>
@@ -15,6 +16,8 @@
     <string name="project_first_todo">First todo</string>
     <string name="todo_edit_project">Edit project</string>
     <string name="todo_add_todo">Add todo</string>
+    <string name="todo_add_no_project_title">No projects</string>
+    <string name="todo_add_no_project">No projects available, please add a project first</string>
     <string name="todo_title">Todo description</string>
     <string name="todo_title_desc">Title of the todo</string>
     <string name="todo_description">Description</string>

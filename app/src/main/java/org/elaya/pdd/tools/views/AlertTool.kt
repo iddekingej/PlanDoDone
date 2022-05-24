@@ -22,7 +22,7 @@ object AlertTool {
         pFragment: Fragment,
         @StringRes pTitle: Int,
         @StringRes pButton: Int,
-        pOnClick: DialogInterface.OnClickListener,
+        pOnClick: DialogInterface.OnClickListener?,
         pHasActivityFinish: Boolean
     ): AlertDialog.Builder? {
         val lContext = pFragment.context
@@ -30,6 +30,7 @@ object AlertTool {
             val lBuilder = AlertDialog.Builder(lContext)
             lBuilder.setTitle(pTitle)
             lBuilder.setPositiveButton(pButton, pOnClick)
+
             if (pHasActivityFinish) {
                 lBuilder.setOnCancelListener { _ -> pFragment.parentFragmentManager.popBackStack() }
             }
@@ -69,7 +70,7 @@ object AlertTool {
         @StringRes pTitle: Int,
         @StringRes pMessage: Int,
         @StringRes pButton: Int,
-        pOnClick: DialogInterface.OnClickListener
+        pOnClick: DialogInterface.OnClickListener?
     ) {
             val lBuilder = makeAlert(pFragment, pTitle, pButton, pOnClick, false)
             if(lBuilder != null) {

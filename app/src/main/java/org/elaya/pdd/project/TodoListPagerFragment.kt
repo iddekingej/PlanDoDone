@@ -11,6 +11,7 @@ import org.elaya.pdd.todo.ToDoEditFragment
 import org.elaya.pdd.todo.Todo
 import org.elaya.pdd.todo.TodoList
 import org.elaya.pdd.tools.fragments.FragmentBase
+import org.elaya.pdd.tools.views.AlertTool
 import java.util.*
 
 class TodoListPagerFragment:FragmentBase() {
@@ -138,7 +139,14 @@ class TodoListPagerFragment:FragmentBase() {
 
     private fun addTodo()
     {
-
+        val lProject=project;
+        if(lProject == null){
+            val lDb=getDB();
+            if(lDb != null && !lDb.hasProjects()){
+                AlertTool.simpleMessage(this,R.string.todo_add_no_project_title,R.string.todo_add_no_project,R.string.label_gen_close,null);
+                return;
+            }
+        }
         startFragment("editTodo") {
 
             ToDoEditFragment.newInstance(project)
