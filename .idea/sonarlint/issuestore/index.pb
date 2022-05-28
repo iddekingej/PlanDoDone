@@ -11,16 +11,10 @@ P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 f
 6app/src/main/java/org/elaya/pdd/main/PDDApplication.kt,d/a/da467e8a10d79006e0aebd5ae166319becfa9fa4
-n
->app/src/main/java/org/elaya/pdd/tools/views/ListViewHandler.kt,a/9/a9ebbc1f5e2c3e8d133a583005f21304ac4b3200
 ;
 gradlew.bat,2/a/2a45a911a8f1836b0b6c5b758962572012d8f8c3
 q
 Aapp/src/main/java/org/elaya/pdd/project/ProjectListViewHandler.kt,d/c/dc535cb540332598ef678bb6756bdd46940c2ea9
-`
-0app/src/main/java/org/elaya/pdd/todo/ToDoEdit.kt,8/7/87bbd0d95e374920df4750a284dabd68ef9010aa
-`
-0app/src/main/java/org/elaya/pdd/db/DataSource.kt,3/f/3f0ca6c9636da45fabdb7ae340a4b95af322370c
 c
 3app/src/main/java/org/elaya/pdd/settings/Globals.kt,9/f/9f9abfad2d11dcf22590b95ab753dc74a23a5e44
 q
@@ -29,17 +23,7 @@ u
 Eapp/src/main/java/org/elaya/pdd/tools/fragments/DialogFragmentBase.kt,7/7/7778cbf3cc01c0df45181f447e7d7b644e00736b
 n
 >app/src/main/java/org/elaya/pdd/project/ProjectEditFragment.kt,5/2/5213af8f6844ea1cb436a1a63bde592f5a3f07b6
-j
-:app/src/main/java/org/elaya/pdd/project/ProjectFragment.kt,e/7/e71f515949e54376982aa2a05d4e212761435ed0
 d
 4app/src/main/java/org/elaya/pdd/main/MainActivity.kt,9/4/9491ba3a62df57c4b91de5183567b9ccac5b7ad4
-n
->app/src/main/java/org/elaya/pdd/project/ProjectListFragment.kt,2/4/24ce42805636c0ac6a06b37a52c66edc78d61686
 `
 0app/src/main/java/org/elaya/pdd/db/OpenHelper.kt,0/1/014d1b97f8c8cb2d13c906b22dcadbfa95ed21dc
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-o
-?app/src/main/java/org/elaya/pdd/tools/fragments/FragmentBase.kt,e/c/ec65182c8fd48c8d8154070cda1b6baccd59d3f9
